@@ -1,0 +1,144 @@
+---
+const items = [
+  'Você termina uma avaliação e, em vez de começar a intervenção pelo Google, já sabe qual habilidade consultar.',
+  'O domingo à noite deixa de ser ocupado por dezenas de abas, pastas e materiais que talvez nem sejam usados.',
+  'Na hora da sessão, você coloca a atividade na mesa sabendo por que escolheu aquela proposta e o que deseja observar.',
+  'Se o desafio estiver fácil ou difícil demais, você consulta o guia e ajusta a aplicação sem criar outro material do zero.',
+  'Quando a mesma atividade volta para a mesa, ela pode ganhar outro nível, novo comando ou uma variação diferente.',
+  'Ao receber um adolescente, adulto ou idoso, você não precisa procurar um novo pacote: consulta as adaptações da atividade.',
+  'Quando surge uma dúvida durante o planejamento, você conversa com a Lumina — assistente inteligente de atividades — e chega diretamente ao material indicado.',
+];
+const colors = ['purple', 'blue', 'green', 'yellow', 'pink', 'purple', 'blue'];
+---
+
+<section class="section rotina" aria-labelledby="rotina-title">
+  <div class="container rotina__grid">
+    <div class="rotina__head">
+      <p class="kicker" data-reveal style="--kicker-color: var(--green)">Na rotina</p>
+      <h2 class="h2" id="rotina-title" data-reveal style="--d:60ms">Imagine como fica a sua semana quando cada atividade tem um lugar e cada escolha tem um motivo.</h2>
+    </div>
+
+    <div class="timeline" data-timeline>
+      <span class="timeline__rail" aria-hidden="true"><span class="timeline__fill" data-timeline-fill></span></span>
+      <ol class="timeline__list">
+      {items.map((t, i) => (
+        <li class={`step step--${colors[i]}`} data-reveal="left">
+          <span class="step__dot" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <p class="step__text">{t}</p>
+        </li>
+      ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rotina { background: #fff; }
+
+  .rotina__head { margin-bottom: 40px; }
+
+  .timeline {
+    --dot: 44px;
+    position: relative;
+  }
+  .timeline__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+
+  .timeline__rail {
+    position: absolute;
+    left: calc(var(--dot) / 2 - 2px);
+    top: 22px;
+    bottom: 22px;
+    width: 4px;
+    border-radius: 4px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .timeline__fill {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--purple), var(--blue), var(--green), var(--yellow), var(--pink));
+    transform-origin: top;
+    transform: scaleY(var(--p, 1));
+  }
+
+  .step {
+    --c: var(--purple);
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--dot) 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .step--blue { --c: var(--blue); }
+  .step--green { --c: var(--green); }
+  .step--yellow { --c: var(--yellow); }
+  .step--pink { --c: var(--pink); }
+
+  .step__dot {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: var(--dot);
+    height: var(--dot);
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid var(--c);
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--ink);
+    box-shadow: 0 0 0 6px #fff;
+  }
+
+  .step__text {
+    margin: 0;
+    padding: 16px 18px;
+    border-radius: var(--radius);
+    background: var(--lilac);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 1024px) {
+    .rotina__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 72px;
+      align-items: start;
+    }
+    .rotina__head { position: sticky; top: 120px; margin: 0; }
+    .timeline { --dot: 52px; }
+    .timeline__list { gap: 18px; }
+    .step__text { padding: 20px 24px; font-size: 1.0625rem; }
+  }
+</style>
+
+<script>
+  const tl = document.querySelector<HTMLElement>('[data-timeline]');
+  if (tl && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const fill = tl.querySelector<HTMLElement>('[data-timeline-fill]')!;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const r = tl.getBoundingClientRect();
+      const mark = innerHeight * 0.6; // a linha acompanha o ponto a 60% da altura da tela
+      const p = Math.min(1, Math.max(0, (mark - r.top) / r.height));
+      fill.style.setProperty('--p', p.toFixed(3));
+    };
+    const onScroll = () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { addEventListener('scroll', onScroll, { passive: true }); update(); }
+      else removeEventListener('scroll', onScroll);
+    }).observe(tl);
+    update();
+  }
+</script>

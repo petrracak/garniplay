@@ -1,0 +1,97 @@
+---
+---
+
+<section class="section garantia" aria-labelledby="garantia-title">
+  <div class="container garantia__grid">
+    <div class="seal" data-reveal="scale" role="img" aria-label="Selo de 7 dias de garantia">
+      <svg class="seal__text" viewBox="0 0 200 200" aria-hidden="true">
+        <defs><path id="seal-circle" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0" /></defs>
+        <text><textPath href="#seal-circle" textLength="512">SUA DECISÃO PROTEGIDA • 7 DIAS DE GARANTIA •</textPath></text>
+      </svg>
+      <div class="seal__core">
+        <b>7</b>
+        <span>dias de<br />garantia</span>
+      </div>
+    </div>
+
+    <div class="garantia__copy">
+      <p class="kicker" data-reveal style="--kicker-color: var(--green)">Sua decisão protegida</p>
+      <h2 class="h2" id="garantia-title" data-reveal style="--d:60ms">Conheça o Garniplay com tranquilidade.</h2>
+      <p class="lead" data-reveal style="--d:120ms">
+        <strong>O risco da decisão fica comigo.</strong> Você tem 7 dias para acessar o Garniplay, conhecer as atividades, os guias e a organização do produto. Se, dentro desse prazo, perceber que o material não faz sentido para a sua prática, basta solicitar o reembolso pela Hotmart e o valor será devolvido. Você não precisa justificar a sua decisão.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .garantia { background: #fff; }
+  .garantia__grid { display: grid; gap: 40px; justify-items: center; text-align: center; }
+  .garantia__copy { max-width: 44rem; }
+  .garantia__copy .h2 { margin-bottom: 18px; }
+
+  .seal {
+    position: relative;
+    width: 220px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    /* argolas concêntricas, como a torre vista de cima */
+    background: radial-gradient(
+      circle,
+      #fff 0 47%,
+      var(--yellow) 47% 55%,
+      var(--green) 55% 63%,
+      var(--blue) 63% 71%,
+      var(--purple) 71% 100%
+    );
+    box-shadow: 0 24px 48px -16px rgb(129 44 188 / 0.45), inset 0 -8px 16px rgb(0 0 0 / 0.15), inset 0 6px 10px rgb(255 255 255 / 0.3);
+  }
+  .seal__text {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: spin 26s linear infinite;
+  }
+  .seal__text text {
+    fill: #fff;
+    font-family: var(--font-display);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .seal__core {
+    position: absolute;
+    inset: 26%;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    line-height: 1;
+  }
+  .seal__core b {
+    font-family: var(--font-display);
+    font-size: 3.6rem;
+    font-weight: 800;
+    color: var(--pink);
+    letter-spacing: -0.06em;
+  }
+  .seal__core span {
+    margin-top: 2px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--grape);
+    line-height: 1.15;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (min-width: 900px) {
+    .garantia__grid { grid-template-columns: auto 1fr; gap: 72px; text-align: left; justify-items: start; align-items: center; }
+    .seal { width: 280px; }
+    .seal__core b { font-size: 4.6rem; }
+    .seal__core span { font-size: 0.875rem; }
+  }
+</style>

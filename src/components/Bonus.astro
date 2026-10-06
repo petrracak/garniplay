@@ -1,0 +1,276 @@
+---
+const bonus = [
+  {
+    kind: 'ficha',
+    color: 'green',
+    title: 'Ficha de Acompanhamento de Evolução',
+    text: 'Registre observações e acompanhe mudanças ao longo das intervenções.',
+  },
+  {
+    kind: 'ref',
+    color: 'blue',
+    title: 'Ficha de Referência por Habilidade',
+    text: 'Um resumo rápido de apoio, para consulta ágil no meio da semana, quando você precisa decidir em dois minutos.',
+  },
+  {
+    kind: 'aula',
+    color: 'yellow',
+    title: 'Aula de Economia para a Prática',
+    text: 'Orientações para comprar, montar, conservar e aproveitar melhor os materiais, com escolhas mais conscientes para a sua prática.',
+  },
+  {
+    kind: 'ebook',
+    color: 'pink',
+    title: 'Guia de Transtornos, Dificuldades de Aprendizagem e Habilidades Relacionadas',
+    text: 'Um e-book para compreender quais habilidades podem demandar atenção em diferentes condições, sempre partindo das dificuldades observadas e da individualidade do aprendente. Esse conteúdo também integra a base de informações da Lumina, para que ela considere essas relações como contexto — nunca como recomendação automática baseada em diagnóstico.',
+  },
+];
+---
+
+<section class="section paper-grid bonus" aria-labelledby="bonus-title">
+  <div class="container">
+    <p class="kicker" data-reveal style="--kicker-color: var(--yellow)">Bônus</p>
+    <h2 class="h2 measure" id="bonus-title" data-reveal style="--d:60ms">Recursos extras para apoiar sua organização e seu raciocínio.</h2>
+  </div>
+
+  <div class="bonus__scroller" data-carousel tabindex="0" aria-label="Lista de bônus">
+    <ul class="bonus__list container">
+      {bonus.map((b, i) => (
+        <li class={`bcard bcard--${b.color}`} data-reveal style={`--d:${i * 90}ms`}>
+          <div class={`bvis bvis--${b.kind}`} aria-hidden="true">
+            {b.kind === 'ficha' && (
+              <div class="m-sheet">
+                <i class="m-title"></i>
+                <svg viewBox="0 0 120 50" class="m-chart"><path d="M4 44 L28 34 L50 38 L74 20 L96 24 L116 6" /><circle cx="116" cy="6" r="4" /></svg>
+                <i class="m-row"></i><i class="m-row"></i><i class="m-row m-row--s"></i>
+              </div>
+            )}
+            {b.kind === 'ref' && (
+              <div class="m-sheet m-sheet--tabs">
+                <span class="m-tabs"><i></i><i></i><i></i><i></i></span>
+                <i class="m-title"></i>
+                <i class="m-row"></i><i class="m-row"></i><i class="m-row m-row--s"></i><i class="m-row"></i>
+              </div>
+            )}
+            {b.kind === 'aula' && (
+              <div class="m-video">
+                <span class="m-play"></span>
+                <span class="m-bar"><i></i></span>
+              </div>
+            )}
+            {b.kind === 'ebook' && (
+              <div class="m-book">
+                <span class="m-stripes"><i></i><i></i><i></i><i></i><i></i></span>
+                <i class="m-title"></i><i class="m-title m-title--s"></i>
+              </div>
+            )}
+          </div>
+          <div class="bcard__body">
+            <span class="bcard__tag">Bônus {i + 1}</span>
+            <h3 class="bcard__title">{b.title}</h3>
+            <p class="bcard__text">{b.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="dots" data-dots aria-hidden="true">
+    {bonus.map((_, i) => <i class:list={{ on: i === 0 }}></i>)}
+  </div>
+</section>
+
+<style>
+  .bonus { overflow: hidden; }
+
+  .bonus__scroller {
+    margin-top: clamp(32px, 5vw, 56px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .bonus__scroller::-webkit-scrollbar { display: none; }
+
+  .bonus__scroller { scroll-padding-inline: var(--gutter); }
+  .bonus__list {
+    list-style: none;
+    margin: 0 auto;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82vw, 380px);
+    gap: 14px;
+    padding-bottom: 16px;
+  }
+  @media (max-width: 899px) {
+    .bonus__list { width: max-content; max-width: none; }
+  }
+
+  .bcard {
+    --c: var(--green);
+    --soft: var(--green-soft);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .bcard--blue { --c: var(--blue); --soft: var(--blue-soft); }
+  .bcard--yellow { --c: #e2a900; --soft: var(--yellow-soft); }
+  .bcard--pink { --c: var(--pink); --soft: var(--pink-soft); }
+
+  .bvis {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    background: var(--soft);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bcard__body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 8px; }
+  .bcard__tag {
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: 99px;
+    background: var(--c);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .bcard__title { font-size: 1.25rem; line-height: 1.22; letter-spacing: -0.02em; }
+  .bcard__text { font-size: 0.975rem; color: var(--text); }
+
+  /* ---------- Mini ilustrações ---------- */
+  .m-sheet {
+    width: 40%;
+    aspect-ratio: 0.78;
+    padding: 10%;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 10px 24px -8px rgb(34 26 58 / 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 7%;
+    transform: rotate(-4deg);
+    transition: transform 0.5s var(--ease-spring);
+  }
+  .bcard:hover .m-sheet { transform: rotate(0deg) translateY(-4px); }
+  .m-title { display: block; height: 8px; width: 70%; border-radius: 9px; background: var(--c); }
+  .m-title--s { width: 45%; opacity: 0.6; }
+  .m-row { display: block; height: 5px; border-radius: 9px; background: #ece6f5; }
+  .m-row--s { width: 60%; }
+  .m-chart { width: 100%; height: auto; overflow: visible; }
+  .m-chart path { fill: none; stroke: var(--c); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  .m-chart circle { fill: var(--c); }
+
+  .m-sheet--tabs { position: relative; }
+  .m-tabs { position: absolute; right: -9%; top: 14%; display: grid; gap: 4px; }
+  .m-tabs i { display: block; width: 12px; height: 16px; border-radius: 0 5px 5px 0; background: var(--blue); }
+  .m-tabs i:nth-child(2) { background: var(--green); }
+  .m-tabs i:nth-child(3) { background: var(--yellow); }
+  .m-tabs i:nth-child(4) { background: var(--pink); }
+
+  .m-video {
+    position: relative;
+    width: 70%;
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3a2470, var(--night));
+    box-shadow: 0 12px 26px -8px rgb(34 26 58 / 0.4);
+    display: grid;
+    place-items: center;
+  }
+  .m-play {
+    width: 22%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--yellow);
+    position: relative;
+    box-shadow: 0 0 0 8px rgb(253 199 3 / 0.2);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  .m-play::after {
+    content: '';
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    border-left: 12px solid var(--night);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+  }
+  .m-bar { position: absolute; left: 8%; right: 8%; bottom: 10%; height: 4px; border-radius: 4px; background: rgb(255 255 255 / 0.2); }
+  .m-bar i { display: block; width: 38%; height: 100%; border-radius: 4px; background: var(--yellow); }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 14px rgb(253 199 3 / 0.08); } }
+
+  .m-book {
+    position: relative;
+    width: 38%;
+    aspect-ratio: 0.72;
+    padding: 12% 12% 12% 22%;
+    border-radius: 4px 12px 12px 4px;
+    background: linear-gradient(90deg, #c6005d 0 9%, var(--pink) 9%);
+    box-shadow: 0 14px 26px -8px rgb(34 26 58 / 0.35), inset -4px 0 0 rgb(255 255 255 / 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+    transform: rotate(5deg);
+    transition: transform 0.5s var(--ease-spring);
+  }
+  .bcard:hover .m-book { transform: rotate(0) translateY(-4px); }
+  .m-book .m-title { background: #fff; }
+  .m-stripes { position: absolute; top: 14%; left: 22%; right: 12%; display: grid; gap: 3px; }
+  .m-stripes i { display: block; height: 5px; border-radius: 9px; background: var(--yellow); }
+  .m-stripes i:nth-child(2) { width: 88%; background: var(--green); }
+  .m-stripes i:nth-child(3) { width: 76%; background: var(--blue); }
+  .m-stripes i:nth-child(4) { width: 64%; background: var(--purple); }
+  .m-stripes i:nth-child(5) { width: 30%; background: #fff; }
+
+  .dots { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+  .dots i { width: 8px; height: 8px; border-radius: 99px; background: #d9cdea; transition: width 0.3s var(--ease-out), background-color 0.3s; }
+  .dots i:global(.on) { width: 24px; background: var(--grape); }
+
+  @media (min-width: 900px) {
+    .bonus__scroller { overflow: visible; }
+    .bonus__list {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .bcard:last-child { grid-column: 1 / -1; flex-direction: row; }
+    .bcard:last-child .bvis { aspect-ratio: auto; flex: 0 0 34%; min-height: 260px; }
+    .bcard:last-child .bcard__body { justify-content: center; padding: 32px 40px; }
+    .bcard__body { padding: 26px 28px 30px; }
+    .dots { display: none; }
+    .bvis { aspect-ratio: 16 / 10; }
+    .m-sheet { width: 36%; }
+    .m-video { width: 62%; }
+    .m-book { width: 22%; }
+    .bcard:last-child .m-book { width: 40%; }
+  }
+</style>
+
+<script>
+  const scroller = document.querySelector<HTMLElement>('[data-carousel]');
+  const dots = [...document.querySelectorAll<HTMLElement>('[data-dots] i')];
+  if (scroller && dots.length) {
+    const cards = [...scroller.querySelectorAll<HTMLElement>('.bcard')];
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const i = cards.indexOf(e.target as HTMLElement);
+            dots.forEach((d, j) => d.classList.toggle('on', i === j));
+          }
+        });
+      },
+      { root: scroller, threshold: 0.6 },
+    );
+    cards.forEach((c) => io.observe(c));
+  }
+</script>

@@ -1,0 +1,116 @@
+---
+import Ring from './Ring.astro';
+
+// Cada trecho pode ganhar a cor de uma argola; as palavras acendem conforme a rolagem.
+const parts: [string, string?][] = [
+  ['O problema não é ter poucos materiais.'],
+  ['É não ter uma'],
+  ['estrutura', 'yellow'],
+  ['que conecte'],
+  ['o que você observou', 'blue'],
+  ['à'],
+  ['atividade,', 'green'],
+  ['ao'],
+  ['nível', 'yellow'],
+  ['e ao que precisa'],
+  ['acompanhar', 'pink'],
+  ['durante a aplicação.'],
+];
+const words = parts.flatMap(([text, color]) => text.split(' ').map((w) => ({ w, color })));
+---
+
+<section class="statement on-dark" aria-label="O problema">
+  <Ring color="yellow" size={64} class="statement__ring statement__ring--a" />
+  <Ring color="blue" size={34} class="statement__ring statement__ring--b" />
+  <Ring color="green" size={46} class="statement__ring statement__ring--c" />
+
+  <div class="container">
+    <p class="statement__text" data-words>
+      {words.map(({ w, color }) => (
+        <span class:list={['w', color && `w--${color}`]}>{w} </span>
+      ))}
+    </p>
+  </div>
+</section>
+
+<style>
+  .statement {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(60% 80% at 100% 0%, rgb(129 44 188 / 0.55), transparent 70%),
+      radial-gradient(50% 60% at 0% 100%, rgb(2 144 249 / 0.22), transparent 70%),
+      var(--night);
+    padding-block: clamp(88px, 14vw, 168px);
+    /* "encaixa" na hero com cantos arredondados, como a borda de uma peça */
+    border-radius: 36px 36px 0 0;
+    margin-top: -36px;
+    z-index: 2;
+  }
+
+  .statement__text {
+    max-width: 20ch;
+    margin: 0 auto;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 1rem + 3.6vw, 3.6rem);
+    line-height: 1.16;
+    letter-spacing: -0.03em;
+    color: #fff;
+    text-wrap: balance;
+  }
+
+  .w { transition: opacity 0.35s var(--ease-out), color 0.35s var(--ease-out); }
+  .w--yellow { color: var(--yellow); }
+  .w--blue { color: #5cb8ff; }
+  .w--green { color: #7ad466; }
+  .w--pink { color: #ff5aa6; }
+
+  /* Com JS, as palavras começam apagadas e acendem com a rolagem */
+  :global(.js) .w { opacity: 0.2; }
+  :global(.js) .w.on { opacity: 1; }
+
+  .statement :global(.statement__ring) { opacity: 0.9; animation: bob 7s ease-in-out infinite; }
+  .statement :global(.statement__ring--a) { top: 48px; right: -14px; }
+  .statement :global(.statement__ring--b) { bottom: 56px; left: 7%; animation-delay: -2s; }
+  .statement :global(.statement__ring--c) { bottom: -12px; right: 18%; animation-delay: -4s; }
+
+  @keyframes bob {
+    50% { transform: translateY(-10px) rotate(8deg); }
+  }
+
+  @media (min-width: 1024px) {
+    .statement { border-radius: 56px 56px 0 0; margin-top: -56px; }
+    .statement :global(.statement__ring--a) { top: 80px; right: 9%; }
+  }
+</style>
+
+<script>
+  const el = document.querySelector<HTMLElement>('[data-words]');
+  if (el) {
+    const words = [...el.querySelectorAll<HTMLElement>('.w')];
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) words.forEach((w) => w.classList.add('on'));
+    else {
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const r = el.getBoundingClientRect();
+        const vh = innerHeight;
+        // começa quando o texto entra a 85% da tela e termina quando o fim dele passa de 45%
+        const start = vh * 0.85;
+        const end = vh * 0.45 - r.height;
+        const p = Math.min(1, Math.max(0, (start - r.top) / (start - end)));
+        const lit = Math.round(p * words.length);
+        words.forEach((w, i) => w.classList.toggle('on', i < lit));
+      };
+      const onScroll = () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      };
+      new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) { addEventListener('scroll', onScroll, { passive: true }); update(); }
+        else removeEventListener('scroll', onScroll);
+      }).observe(el);
+    }
+  }
+</script>

@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo-branca.png';
+import { LEGAL } from '../config';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <Image src={logo} alt="Garniplay" widths={[160, 320]} sizes="160px" width={160} class="footer__logo" />
+      <p class="footer__by">Garniplay • Fernanda Garnizet<br />© {year}. Todos os direitos reservados.</p>
+    </div>
+    <div class="footer__legal">
+      <nav aria-label="Links legais">
+        <a href={LEGAL.terms}>Termos de Uso</a>
+        <a href={LEGAL.privacy}>Política de Privacidade</a>
+        <a href={LEGAL.support}>Suporte</a>
+      </nav>
+      <p>{LEGAL.company} • CNPJ {LEGAL.cnpj}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: 48px 0 calc(48px + env(safe-area-inset-bottom));
+    background: #140830;
+    color: #9d93bd;
+    font-size: 0.875rem;
+  }
+  .footer__grid { display: grid; gap: 28px; }
+  .footer :global(.footer__logo) { width: 140px; height: auto; margin-bottom: 14px; }
+  .footer__by { margin: 0; }
+  .footer__legal nav { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-bottom: 10px; }
+  .footer__legal a { color: #fff; text-decoration: none; font-weight: 600; }
+  .footer__legal a:hover { text-decoration: underline; }
+  .footer__legal p { margin: 0; }
+
+  @media (max-width: 1023px) {
+    /* espaço para a barra fixa de compra */
+    .footer { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+  }
+  @media (min-width: 768px) {
+    .footer__grid { grid-template-columns: 1fr auto; align-items: end; }
+    .footer__legal { text-align: right; }
+    .footer__legal nav { justify-content: flex-end; }
+  }
+</style>

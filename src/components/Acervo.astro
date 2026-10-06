@@ -1,0 +1,342 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import Floater from './Floater.astro';
+import sistemaAtencional from '../assets/atividades/sistema-atencional.webp';
+import orientacaoTemporal from '../assets/atividades/orientacao-temporal.webp';
+import dominanciaLateral from '../assets/atividades/dominancia-lateral.webp';
+import linguagemOral from '../assets/atividades/linguagem-oral.webp';
+import raciocinioMatematico from '../assets/atividades/raciocinio-matematico.webp';
+import linguagemInterpretacao from '../assets/atividades/linguagem-interpretacao.webp';
+
+const items = [
+  { img: dominanciaLateral, code: 'DL-03', title: 'Olho de Espião', skill: 'Dominância Lateral', color: 'purple' },
+  { img: orientacaoTemporal, code: 'OT-05', title: 'Central do Tempo', skill: 'Orientação Temporal', color: 'yellow' },
+  { img: linguagemInterpretacao, code: 'IT-01', title: 'O Que Entrega?', skill: 'Linguagem · Interpretação', color: 'pink' },
+  { img: raciocinioMatematico, code: 'RM-01', title: 'Quanto Tem Aqui?', skill: 'Raciocínio Matemático', color: 'green' },
+  { img: linguagemOral, code: 'LG-05', title: 'Central de Comunicação', skill: 'Linguagem Oral', color: 'blue' },
+  { img: sistemaAtencional, code: 'AD-02', title: 'Central de Entrega', skill: 'Atenção Dividida', color: 'purple' },
+];
+
+// Versão grande, carregada só quando a pessoa abre a imagem em tela cheia.
+const large = await Promise.all(items.map((it) => getImage({ src: it.img, width: 1800, format: 'webp', quality: 82 })));
+---
+
+<section class="section acervo" id="acervo" aria-labelledby="acervo-title">
+  <Floater toy="cubo" size={96} sizeDesktop={170} style="top:-58px; left:-22px" speed={7} />
+
+  <div class="container">
+    <p class="kicker" data-reveal style="--kicker-color: var(--pink)">Veja uma parte do acervo</p>
+    <h2 class="h2 measure" id="acervo-title" data-reveal style="--d:60ms">Atividades que saem da tela e ganham vida na sessão.</h2>
+    <p class="lead measure acervo__lead" data-reveal style="--d:120ms">Cada proposta foi organizada para facilitar a escolha, a impressão e a adaptação. Abaixo estão exemplos reais do material que você encontrará no Garniplay.</p>
+  </div>
+
+  <div class="acervo__scroller" data-acervo-scroller>
+    <ul class="acervo__list container">
+      {items.map((it, i) => (
+        <li class={`sample sample--${it.color}`} data-reveal style={`--d:${(i % 3) * 80}ms`}>
+          <button
+            type="button"
+            class="sample__btn"
+            data-open={i}
+            data-full={large[i].src}
+            data-caption={`${it.code} · ${it.title}`}
+            aria-label={`Ampliar atividade ${it.title}`}
+          >
+            <span class="sample__frame">
+              <Image
+                src={it.img}
+                alt={`Lâmina da atividade ${it.title} (${it.code}), de ${it.skill}`}
+                widths={[480, 720, 960]}
+                sizes="(min-width: 1024px) 370px, (min-width: 720px) 46vw, 82vw"
+                quality={80}
+                loading="lazy"
+              />
+              <span class="sample__zoom"><Icon name="search" size={18} /> Ampliar</span>
+            </span>
+            <span class="sample__caption">
+              <span class="sample__code">{it.code}</span>
+              <b>{it.title}</b>
+              <small>{it.skill}</small>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="dots acervo__dots" data-acervo-dots aria-hidden="true">
+    {items.map((_, i) => <i class:list={{ on: i === 0 }}></i>)}
+  </div>
+
+  <div class="container">
+    <p class="acervo__note">Imagens reais do Garniplay. A escolha do nível e as adaptações devem considerar as necessidades observadas em cada aprendente.</p>
+  </div>
+
+  <dialog class="lightbox" data-lightbox aria-label="Atividade ampliada">
+    <button type="button" class="lightbox__close" data-close aria-label="Fechar"><Icon name="x" size={22} stroke={2.5} /></button>
+    <figure class="lightbox__figure">
+      <img data-lightbox-img alt="" />
+      <figcaption data-lightbox-caption></figcaption>
+    </figure>
+    <div class="lightbox__nav">
+      <button type="button" data-prev aria-label="Atividade anterior"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg></button>
+      <span data-lightbox-count></span>
+      <button type="button" data-next aria-label="Próxima atividade"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg></button>
+    </div>
+  </dialog>
+</section>
+
+<style>
+  .acervo {
+    background: linear-gradient(180deg, #fff 0%, var(--lilac) 100%);
+  }
+  .acervo__lead { margin-top: 18px; }
+
+  .acervo__scroller {
+    margin-top: clamp(32px, 5vw, 56px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .acervo__scroller::-webkit-scrollbar { display: none; }
+
+  .acervo__list {
+    list-style: none;
+    margin: 0 auto;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82vw, 420px);
+    gap: 14px;
+    padding-bottom: 18px;
+  }
+
+  .sample { --c: var(--purple); scroll-snap-align: start; }
+  .sample--yellow { --c: #e2a900; }
+  .sample--pink { --c: var(--pink); }
+  .sample--green { --c: var(--green); }
+  .sample--blue { --c: var(--blue); }
+
+  .sample__btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: var(--shadow);
+    text-align: left;
+    cursor: zoom-in;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+  }
+  .sample__btn:hover { transform: translateY(-6px); box-shadow: 0 8px 18px rgb(34 26 58 / 0.08), 0 30px 60px rgb(34 26 58 / 0.16); }
+
+  .sample__frame {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #fff;
+    aspect-ratio: 1.414;
+  }
+  .sample__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .sample__btn:hover .sample__frame img { transform: scale(1.04); }
+
+  .sample__zoom {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 99px;
+    background: rgb(30 13 68 / 0.82);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .sample__caption {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 10px;
+    align-items: center;
+    padding: 14px 8px 6px;
+  }
+  .sample__code {
+    grid-row: span 2;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: var(--c);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .sample__caption b { font-family: var(--font-display); font-size: 1.0625rem; color: var(--ink); line-height: 1.2; }
+  .sample__caption small { font-size: 0.8125rem; color: var(--muted); font-weight: 600; }
+
+  .acervo__dots { display: flex; justify-content: center; gap: 8px; margin-top: 6px; }
+  .acervo__dots i { width: 8px; height: 8px; border-radius: 99px; background: #d9cdea; transition: width 0.3s var(--ease-out), background-color 0.3s; }
+  .acervo__dots i:global(.on) { width: 24px; background: var(--grape); }
+
+  .acervo__note { margin: 22px auto 0; max-width: 40rem; text-align: center; font-size: 0.8125rem; color: var(--muted); }
+
+  /* ---------- Tela cheia ---------- */
+  .lightbox {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgb(20 8 48 / 0.94);
+    color: #fff;
+  }
+  .lightbox[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; animation: lb-in 0.3s var(--ease-out); }
+  .lightbox::backdrop { background: transparent; }
+  @keyframes lb-in { from { opacity: 0; } }
+
+  .lightbox__figure {
+    margin: 0;
+    width: min(94vw, 1400px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    touch-action: pan-y pinch-zoom;
+  }
+  .lightbox__figure img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 76dvh;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #fff;
+    animation: lb-img 0.35s var(--ease-out);
+  }
+  @keyframes lb-img { from { opacity: 0; transform: scale(0.97); } }
+  .lightbox__figure figcaption { font-family: var(--font-display); font-weight: 600; }
+
+  .lightbox__close {
+    position: absolute;
+    top: calc(14px + env(safe-area-inset-top));
+    right: 14px;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.12);
+    color: #fff;
+    cursor: pointer;
+  }
+  .lightbox__nav { display: flex; align-items: center; gap: 18px; margin-top: 18px; font-variant-numeric: tabular-nums; color: #cfc6e6; }
+  .lightbox__nav button {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.12);
+    color: #fff;
+    cursor: pointer;
+  }
+  .lightbox__nav button:hover, .lightbox__close:hover { background: rgb(255 255 255 / 0.22); }
+
+  @media (max-width: 1023px) {
+    .acervo__list { width: max-content; max-width: none; }
+  }
+  @media (min-width: 720px) and (max-width: 1023px) {
+    .acervo__list { grid-auto-columns: 46vw; }
+  }
+  @media (min-width: 1024px) {
+    .acervo__scroller { overflow: visible; }
+    .acervo__list {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .acervo__dots { display: none; }
+  }
+</style>
+
+<script>
+  const scroller = document.querySelector<HTMLElement>('[data-acervo-scroller]');
+  const dots = [...document.querySelectorAll<HTMLElement>('[data-acervo-dots] i')];
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+
+  if (scroller) {
+    const btns = [...scroller.querySelectorAll<HTMLButtonElement>('[data-open]')];
+
+    // Indicador do carrossel (mobile)
+    const cards = btns.map((b) => b.closest('li')!);
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const i = cards.indexOf(e.target as HTMLLIElement);
+          dots.forEach((d, j) => d.classList.toggle('on', i === j));
+        }
+      }),
+      { root: scroller, threshold: 0.6 },
+    );
+    cards.forEach((c) => io.observe(c));
+
+    // Tela cheia
+    if (dialog) {
+      const img = dialog.querySelector<HTMLImageElement>('[data-lightbox-img]')!;
+      const caption = dialog.querySelector<HTMLElement>('[data-lightbox-caption]')!;
+      const count = dialog.querySelector<HTMLElement>('[data-lightbox-count]')!;
+      let current = 0;
+
+      const show = (i: number) => {
+        current = (i + btns.length) % btns.length;
+        const b = btns[current];
+        img.src = b.dataset.full!;
+        img.alt = b.querySelector('img')?.alt ?? '';
+        caption.textContent = b.dataset.caption!;
+        count.textContent = `${current + 1} / ${btns.length}`;
+        img.style.animation = 'none';
+        void img.offsetWidth;
+        img.style.animation = '';
+      };
+
+      btns.forEach((b, i) => b.addEventListener('click', () => { show(i); dialog.showModal(); }));
+      dialog.querySelector('[data-close]')!.addEventListener('click', () => dialog.close());
+      dialog.querySelector('[data-prev]')!.addEventListener('click', () => show(current - 1));
+      dialog.querySelector('[data-next]')!.addEventListener('click', () => show(current + 1));
+      // clique fora da imagem fecha
+      dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+      dialog.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') show(current - 1);
+        if (e.key === 'ArrowRight') show(current + 1);
+      });
+
+      // arrastar para os lados troca de atividade
+      let x0: number | null = null;
+      img.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+      img.addEventListener('pointerup', (e) => {
+        if (x0 === null) return;
+        const dx = e.clientX - x0;
+        if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+        x0 = null;
+      });
+    }
+  }
+</script>

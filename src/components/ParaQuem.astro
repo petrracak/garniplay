@@ -1,0 +1,175 @@
+---
+import Icon from './Icon.astro';
+
+const sim = [
+  'é psicopedagoga ou neuropsicopedagoga e deseja ampliar suas possibilidades de intervenção;',
+  'sabe qual habilidade precisa estimular, mas perde tempo procurando como trabalhar;',
+  'tem vários materiais, porém nem sempre sabe qual escolher para cada objetivo;',
+  'quer evitar que as sessões se resumam a atividades com aparência de reforço escolar;',
+  'atende ou pretende atender diferentes faixas etárias;',
+  'busca mais organização sem abrir mão do próprio raciocínio clínico.',
+];
+const nao = [
+  'procura um protocolo que substitua sua análise profissional;',
+  'espera uma atividade única que funcione da mesma forma para todos;',
+  'não pretende adaptar a condução às necessidades do aprendente;',
+  'busca exercícios escolares prontos, sem foco na estimulação de habilidades.',
+];
+---
+
+<section class="section paper-grid pq" data-pq data-tab="sim" aria-label="Para quem é o Garniplay">
+  <div class="container">
+    <div class="pq__tabs" role="tablist" aria-label="Escolha" data-reveal>
+      <span class="pq__pill" aria-hidden="true"></span>
+      <button role="tab" id="tab-sim" aria-controls="painel-sim" aria-selected="true" data-tab-btn="sim">Para quem é</button>
+      <button role="tab" id="tab-nao" aria-controls="painel-nao" aria-selected="false" data-tab-btn="nao">Para quem não é</button>
+    </div>
+
+    <div class="pq__grid">
+      <article class="pq__card pq__card--sim" id="painel-sim" role="tabpanel" aria-labelledby="tab-sim" data-reveal>
+        <p class="kicker" style="--kicker-color: var(--green)">Para quem é</p>
+        <h2 class="pq__title">O Garniplay faz sentido para você que…</h2>
+        <ul class="pq__list">
+          {sim.map((t) => (
+            <li><span class="pq__icon pq__icon--sim"><Icon name="check" size={16} stroke={3} /></span>{t}</li>
+          ))}
+        </ul>
+      </article>
+
+      <article class="pq__card pq__card--nao" id="painel-nao" role="tabpanel" aria-labelledby="tab-nao" data-reveal style="--d:120ms">
+        <p class="kicker" style="--kicker-color: var(--pink)">Para quem não é</p>
+        <h2 class="pq__title">Talvez não seja o material certo se você…</h2>
+        <ul class="pq__list">
+          {nao.map((t) => (
+            <li><span class="pq__icon pq__icon--nao"><Icon name="x" size={14} stroke={3} /></span>{t}</li>
+          ))}
+        </ul>
+        <p class="pq__note">O Garniplay apoia a prática da profissional. Ele não substitui formação, avaliação ou raciocínio clínico.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pq__tabs {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5px;
+    margin: 0 auto 20px;
+    max-width: 420px;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .pq__tabs button {
+    position: relative;
+    z-index: 1;
+    min-height: 48px;
+    border: 0;
+    background: none;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .pq__tabs button[aria-selected='true'] { color: #fff; }
+  .pq__pill {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    width: calc(50% - 5px);
+    border-radius: 999px;
+    background: var(--green);
+    box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.25), inset 0 -3px 0 rgb(0 0 0 / 0.12);
+    transition: transform 0.45s var(--ease-spring), background-color 0.3s;
+  }
+  [data-tab='nao'] .pq__pill { transform: translateX(100%); background: var(--grape); }
+
+  .pq__card {
+    position: relative;
+    padding: 28px 22px;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+  .pq__card--nao { background: #fbf9fe; box-shadow: var(--shadow-sm); }
+
+  .pq__title {
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.125rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .pq__list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 14px; }
+  .pq__list li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+    line-height: 1.5;
+  }
+  .pq__icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-top: -1px;
+  }
+  .pq__icon--sim { background: var(--green-soft); color: #2f8d20; }
+  .pq__icon--nao { background: var(--pink-soft); color: var(--pink-cta); }
+
+  .pq__note {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px dashed #dcd3ea;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  /* Mobile: abas alternam os cartões, com uma troca suave */
+  @media (max-width: 899px) {
+    .pq__grid { display: grid; }
+    .pq__card { grid-area: 1 / 1; transition: opacity 0.35s var(--ease-out), transform 0.45s var(--ease-out), visibility 0.35s; }
+    [data-tab='sim'] .pq__card--nao,
+    [data-tab='nao'] .pq__card--sim {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px) scale(0.98);
+      pointer-events: none;
+    }
+    /* o reveal não pode reexibir o cartão inativo */
+    :global(.js) [data-tab='sim'] .pq__card--nao:global(.is-in),
+    :global(.js) [data-tab='nao'] .pq__card--sim:global(.is-in) { opacity: 0; }
+  }
+
+  @media (min-width: 900px) {
+    .pq__tabs { display: none; }
+    .pq__grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .pq__card { padding: 44px 40px; }
+    .pq__card--nao { margin-top: 48px; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-pq]').forEach((root) => {
+    const btns = root.querySelectorAll<HTMLButtonElement>('[data-tab-btn]');
+    btns.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tabBtn!;
+        root.dataset.tab = tab;
+        btns.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+      }),
+    );
+  });
+</script>

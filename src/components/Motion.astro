@@ -1,0 +1,66 @@
+---
+// Comportamentos globais: revelação ao rolar, contadores e links de checkout pendentes.
+---
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Revelação ao rolar: adiciona .is-in uma única vez quando o elemento entra na tela.
+  const revealed = document.querySelectorAll<HTMLElement>('[data-reveal]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    revealed.forEach((el) => el.classList.add('is-in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+    revealed.forEach((el) => {
+      // o que já passou da tela (ex.: recarregar no meio da página) aparece direto
+      if (el.getBoundingClientRect().bottom < 0) el.classList.add('is-in');
+      else io.observe(el);
+    });
+  }
+
+  // Contadores: animam de 0 até o valor final quando aparecem.
+  const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+  if (!reduce) {
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+    const cio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target as HTMLElement;
+          cio.unobserve(el);
+          const target = Number(el.dataset.count);
+          const dur = target > 10 ? 1400 : 700;
+          const t0 = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min(1, (now - t0) / dur);
+            el.textContent = String(Math.round(ease(p) * target));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      },
+      { threshold: 0.6 },
+    );
+    counters.forEach((el) => {
+      if (el.getBoundingClientRect().top > innerHeight) {
+        el.textContent = '0';
+        cio.observe(el);
+      }
+    });
+  }
+
+  // Enquanto o link do checkout não for definido (CHECKOUT_URL = '#'), evita o salto para o topo.
+  document.querySelectorAll<HTMLAnchorElement>('a[data-cta]').forEach((a) => {
+    if (a.getAttribute('href') === '#') a.addEventListener('click', (e) => e.preventDefault());
+  });
+</script>

@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import Ring from './Ring.astro';
+import Floater from './Floater.astro';
+import foto from '../assets/fernanda.webp';
+
+const credentials = ['Pedagoga', 'Psicopedagoga', 'Especialista em Neurociências'];
+---
+
+<section class="section autora" aria-labelledby="autora-title">
+  <Floater toy="cubo" size={84} sizeDesktop={150} style="top:-46px; left:-14px" speed={6.5} delay={-2} />
+  <div class="container autora__grid">
+    <div class="autora__photo" data-reveal="scale">
+      <Ring color="yellow" size={64} class="autora__ring autora__ring--a" />
+      <Ring color="green" size={38} class="autora__ring autora__ring--b" />
+      <Image
+        src={foto}
+        alt="Fernanda Garnizet sorrindo, com brinquedos pedagógicos ao redor"
+        widths={[400, 640, 900, 1200]}
+        sizes="(min-width: 900px) 440px, 88vw"
+        quality={80}
+        class="autora__img"
+      />
+      <p class="autora__stat"><b>+7.000</b> psicopedagogas direcionadas</p>
+    </div>
+
+    <div class="autora__copy">
+      <p class="kicker" data-reveal style="--kicker-color: var(--pink)">Quem criou o Garniplay</p>
+      <h2 class="h2" id="autora-title" data-reveal style="--d:60ms">Experiência prática transformada em uma estrutura de intervenção.</h2>
+      <ul class="creds" data-reveal style="--d:100ms">
+        {credentials.map((c) => <li>{c}</li>)}
+      </ul>
+      <div data-reveal style="--d:140ms">
+        <p>Eu sou Fernanda Garnizet, pedagoga, psicopedagoga e especialista em Neurociências. Ao longo da minha trajetória, já direcionei mais de 7.000 psicopedagogas a atenderem com mais segurança.</p>
+        <p>Percebi que muitas profissionais conseguiam identificar as habilidades que precisavam ser estimuladas, mas ainda encontravam dificuldade para transformar esse objetivo em uma atividade adequada para a sessão.</p>
+        <p class="autora__close">Foi para encurtar esse caminho que desenvolvi o Garniplay.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .autora { background: #fff; }
+  .autora__grid { display: grid; gap: 48px; }
+
+  .autora__photo { position: relative; width: min(100%, 440px); margin: 0 auto; }
+  .autora__photo :global(.autora__img) {
+    width: 100%;
+    height: auto;
+    /* a foto já vem com cantos arredondados e fundo roxo */
+    filter: drop-shadow(0 30px 40px rgb(87 40 156 / 0.28));
+  }
+  .autora__photo :global(.autora__ring--a) { top: -22px; right: -14px; z-index: 1; }
+  .autora__photo :global(.autora__ring--b) { bottom: 72px; left: -18px; z-index: 1; }
+
+  .autora__stat {
+    position: absolute;
+    left: 50%;
+    bottom: -22px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 12px 20px;
+    border-radius: 99px;
+    background: #fff;
+    box-shadow: var(--shadow);
+    white-space: nowrap;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .autora__stat b { font-family: var(--font-display); font-size: 1.375rem; color: var(--pink); letter-spacing: -0.03em; }
+
+  .creds { list-style: none; margin: 20px 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .creds li {
+    padding: 6px 14px;
+    border-radius: 99px;
+    background: var(--lilac);
+    color: var(--grape);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .autora__close {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1875rem;
+    color: var(--grape);
+    letter-spacing: -0.015em;
+  }
+
+  @media (min-width: 900px) {
+    .autora__grid { grid-template-columns: 0.8fr 1.2fr; gap: 80px; align-items: center; }
+    .autora__photo { margin: 0; }
+  }
+</style>

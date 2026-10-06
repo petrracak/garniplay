@@ -1,0 +1,227 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import Floater from './Floater.astro';
+import lamina from '../assets/atividades/orientacao-temporal.webp';
+
+const variations = [
+  { label: 'Níveis de dificuldade', icon: 'levels', color: 'purple' },
+  { label: 'Adaptações por faixa etária', icon: 'people', color: 'blue' },
+  { label: 'Variações de aplicação', icon: 'layers', color: 'green' },
+  { label: 'Combinações para a sessão', icon: 'stack', color: 'pink' },
+] as const;
+---
+
+<section class="section paper-grid repertorio" aria-labelledby="repertorio-title">
+  <Floater toy="aviao" size={100} sizeDesktop={180} style="top:-54px; right:-18px" speed={6.5} delay={-1} />
+  <div class="container">
+    <div class="rep__top">
+      <div>
+        <p class="kicker" data-reveal style="--kicker-color: var(--yellow)">Um repertório que se amplia</p>
+        <h2 class="h2" id="repertorio-title" data-reveal style="--d:60ms">100 atividades. Diferentes possibilidades de aplicação.</h2>
+      </div>
+      <div class="rep__copy" data-reveal style="--d:120ms">
+        <p class="lead"><strong>Quando falamos em 100 atividades, não estamos falando de 100 propostas rígidas, usadas uma única vez.</strong></p>
+        <p>Cada atividade funciona como um ponto de partida. Você pode ajustar o nível de dificuldade, adaptar a linguagem, modificar comandos e variar a aplicação conforme a faixa etária, o objetivo e a resposta do aprendente.</p>
+        <p><strong>O Garniplay não entrega apenas quantidade. Entrega um repertório que cresce quando você aprende a variar, adaptar e combinar as atividades.</strong></p>
+      </div>
+    </div>
+
+    <div class="tree" data-reveal-group>
+      <div class="sheet" data-reveal="scale">
+        <span class="sheet__tag">1 atividade-base</span>
+        <Image src={lamina} alt="Lâmina da atividade Central do Tempo (OT-05), de Orientação Temporal" widths={[400, 640, 800]} sizes="(min-width: 900px) 360px, 86vw" quality={80} class="sheet__img" />
+        <span class="sheet__caption">OT-05 · Central do Tempo</span>
+      </div>
+
+      <ul class="branches" data-branches>
+        {variations.map((v, i) => (
+          <li class={`branch branch--${v.color}`} data-reveal="left" style={`--d:${200 + i * 140}ms`}>
+            <span class="branch__icon"><Icon name={v.icon} size={20} /></span>
+            {v.label}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <aside class="anchor" data-reveal>
+      <h3>Agora imagine o trabalho necessário para construir esse sistema sozinha.</h3>
+      <p>Você precisaria selecionar 100 atividades, relacionar cada uma às habilidades e competências, pensar diferentes níveis, criar adaptações para várias etapas de vida, definir o que observar e organizar tudo para encontrar rapidamente quando precisasse.</p>
+      <p class="anchor__close">No Garniplay, esse caminho já foi estruturado para você.</p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .rep__top { display: grid; gap: 20px; }
+  .rep__copy .lead { margin-bottom: 0.8em; }
+
+  /* ---------- Árvore: 1 atividade, 4 caminhos ---------- */
+  .tree {
+    display: grid;
+    gap: 22px;
+    justify-items: center;
+    margin-block: clamp(40px, 6vw, 72px);
+  }
+
+  .sheet {
+    position: relative;
+    width: min(100%, 360px);
+    padding: 12px 12px 14px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: var(--shadow), 10px 10px 0 -2px var(--yellow-soft), 20px 20px 0 -4px var(--purple-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    rotate: -2.5deg;
+  }
+  .sheet__tag {
+    position: absolute;
+    top: -14px;
+    left: 18px;
+    z-index: 1;
+    padding: 5px 12px;
+    border-radius: 99px;
+    background: var(--grape);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    box-shadow: 0 6px 14px -4px rgb(87 40 156 / 0.5);
+  }
+  .sheet :global(.sheet__img) { width: 100%; height: auto; border-radius: 10px; }
+  .sheet__caption {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink);
+    padding-left: 4px;
+  }
+
+  .branches {
+    --rail: 26px;
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 calc(var(--rail) + 18px);
+    display: grid;
+    gap: 12px;
+    width: min(100%, 420px);
+  }
+  /* linha vertical que liga a atividade aos caminhos */
+  .branches::before {
+    content: '';
+    position: absolute;
+    left: var(--rail);
+    top: -22px;
+    bottom: 28px;
+    width: 3px;
+    border-radius: 3px;
+    background: #d9cdea;
+  }
+  .branch {
+    --c: var(--purple);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 58px;
+    padding: 10px 16px 10px 10px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .branch::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    width: 18px;
+    height: 3px;
+    background: #d9cdea;
+  }
+  .branch--blue { --c: var(--blue); }
+  .branch--green { --c: var(--green); }
+  .branch--pink { --c: var(--pink); }
+  .branch__icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 12px;
+    background: var(--c);
+    color: #fff;
+    box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.3), inset 0 -3px 0 rgb(0 0 0 / 0.14);
+  }
+
+  /* Mobile: a linha desce do centro da folha, "costurando" os caminhos */
+  @media (max-width: 899px) {
+    .branches { padding-left: 0; }
+    .branches::before { left: calc(50% - 1.5px); top: -22px; bottom: 20px; }
+    .branch::before { display: none; }
+  }
+
+  /* ---------- Bloco de ancoragem ---------- */
+  .anchor {
+    position: relative;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 28px 24px;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .anchor::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg, var(--pink), var(--yellow), var(--green), var(--blue), var(--purple));
+  }
+  .anchor h3 {
+    font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.875rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+  }
+  .anchor__close {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--grape);
+  }
+
+  @media (min-width: 900px) {
+    .rep__top { grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; }
+    .tree {
+      grid-template-columns: auto auto;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+    }
+    .sheet { width: 380px; }
+    .branches { --rail: 56px; padding-left: calc(var(--rail) + 22px); }
+    .branches::before { top: 29px; bottom: 29px; left: var(--rail); }
+    .branches::after {
+      /* ligação horizontal entre a folha e a árvore */
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: var(--rail);
+      height: 3px;
+      background: #d9cdea;
+    }
+    .branch::before { width: 22px; }
+    .anchor { padding: 44px 48px; }
+  }
+</style>

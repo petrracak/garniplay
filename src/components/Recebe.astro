@@ -1,0 +1,181 @@
+---
+import Icon from './Icon.astro';
+
+const items = [
+  {
+    icon: 'stack',
+    color: 'pink',
+    title: '100 atividades que não terminam no primeiro uso',
+    text: 'Cada proposta pode ganhar diferentes níveis de desafio, comandos, regras e adaptações conforme a faixa etária, o objetivo e a resposta do aprendente.',
+  },
+  {
+    icon: 'book',
+    color: 'yellow',
+    title: '100 guias de aplicação',
+    text: 'Cada atividade é acompanhada de um guia com o que ela estimula, fundamentação, orientações de aplicação, o que observar durante a sessão, níveis de dificuldade, adaptações por faixa etária e variações para ampliar as possibilidades de uso.',
+    tall: true,
+  },
+  {
+    icon: 'target',
+    color: 'green',
+    title: 'Organização por objetivos',
+    text: 'Encontre atividades pela habilidade e pela competência específica que deseja estimular.',
+  },
+  {
+    icon: 'people',
+    color: 'blue',
+    title: 'Adaptação por fase de vida',
+    text: 'Propostas para 2 a 5 anos, crianças em idade escolar, adolescentes, adultos e idosos.',
+  },
+  {
+    icon: 'levels',
+    color: 'purple',
+    title: 'Níveis de dificuldade',
+    text: 'Ajuste o desafio de acordo com o repertório, o momento e a evolução do aprendente.',
+  },
+  {
+    icon: 'chat',
+    color: 'lumina',
+    title: 'Lumina — assistente inteligente de atividades',
+    text: 'Converse sobre as dificuldades observadas e receba recomendações, adaptações, variações e acesso direto às atividades indicadas.',
+    wide: true,
+  },
+] as const;
+---
+
+<section class="section recebe on-dark">
+  <div class="container">
+    <p class="kicker" data-reveal style="--kicker-color: var(--yellow)">O que você recebe</p>
+    <h2 class="h2 measure" data-reveal style="--d:60ms">Um acervo pensado para sair da pasta e entrar na sessão.</h2>
+
+    <ul class="bento">
+      {items.map((it, i) => (
+        <li
+          class:list={['tile', `tile--${it.color}`, { 'tile--tall': 'tall' in it, 'tile--wide': 'wide' in it }]}
+          data-reveal
+          style={`--d:${(i % 3) * 80}ms`}
+        >
+          <span class="tile__num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="tile__icon"><Icon name={it.icon} size={26} /></span>
+          <h3 class="tile__title">{it.title}</h3>
+          <p class="tile__text">{it.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .recebe {
+    background:
+      radial-gradient(50% 40% at 85% 10%, rgb(129 44 188 / 0.45), transparent 70%),
+      var(--night);
+  }
+
+  .bento {
+    list-style: none;
+    margin: clamp(32px, 5vw, 56px) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .tile {
+    --c: var(--pink);
+    position: relative;
+    overflow: hidden;
+    padding: 24px 22px;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    transition: background-color 0.3s, transform 0.4s var(--ease-out), border-color 0.3s;
+  }
+  .tile:hover { background: rgb(255 255 255 / 0.09); border-color: rgb(255 255 255 / 0.18); }
+  .tile--yellow { --c: var(--yellow); }
+  .tile--green { --c: var(--green); }
+  .tile--blue { --c: var(--blue); }
+  .tile--purple { --c: #b06cf0; }
+
+  .tile__num {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: rgb(255 255 255 / 0.35);
+    letter-spacing: 0.04em;
+  }
+
+  .tile__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 18px;
+    border-radius: 16px;
+    background: var(--c);
+    color: #fff;
+    box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.3), inset 0 -4px 0 rgb(0 0 0 / 0.15);
+  }
+  .tile--yellow .tile__icon { color: var(--ink); }
+
+  .tile__title {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .tile__text { font-size: 0.975rem; line-height: 1.55; color: #cfc6e6; }
+
+  /* Lumina ganha destaque com o gradiente das argolas */
+  .tile--lumina {
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgb(242 12 117 / 0.35), transparent 55%),
+      radial-gradient(120% 140% at 0% 100%, rgb(2 144 249 / 0.3), transparent 55%),
+      rgb(255 255 255 / 0.06);
+    border-color: rgb(255 255 255 / 0.2);
+  }
+  .tile--lumina .tile__icon {
+    background: conic-gradient(from 200deg, var(--pink), var(--purple), var(--blue), var(--green), var(--yellow), var(--pink));
+  }
+
+  /* Mobile: ícone ao lado do título para a lista não ficar longa demais */
+  @media (max-width: 719px) {
+    .tile {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      column-gap: 14px;
+      align-items: center;
+      padding: 20px 18px;
+    }
+    .tile__icon { width: 44px; height: 44px; margin: 0; border-radius: 14px; }
+    .tile__icon :global(svg) { width: 22px; height: 22px; }
+    .tile__title { margin: 0; font-size: 1.0625rem; padding-right: 18px; }
+    .tile__text { grid-column: 1 / -1; margin-top: 10px; font-size: 0.9375rem; }
+    .tile__num { top: 14px; right: 16px; }
+  }
+
+  @media (min-width: 720px) {
+    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .tile--wide { grid-column: 1 / -1; }
+  }
+  @media (min-width: 720px) and (max-width: 1023px) {
+    .tile:first-child { grid-column: 1 / -1; }
+  }
+
+  @media (min-width: 1024px) {
+    .bento {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: dense;
+    }
+    .tile { padding: 32px 30px; }
+    .tile--tall { grid-row: span 2; }
+    .tile--wide { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr; column-gap: 24px; align-items: center; }
+    .tile--wide .tile__icon { grid-row: span 2; margin: 0; width: 72px; height: 72px; border-radius: 22px; }
+    .tile--wide .tile__title { font-size: 1.5rem; }
+    .tile--tall .tile__title { font-size: 1.5rem; }
+    .tile--tall .tile__text { font-size: 1.0625rem; }
+  }
+</style>

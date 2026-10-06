@@ -1,0 +1,91 @@
+---
+import { Image } from 'astro:assets';
+import icon from '../assets/brand/favicon.png';
+import { CHECKOUT_URL } from '../config';
+---
+
+<!-- Mobile: barra inferior. Desktop: barra superior. Aparece depois da dobra e some no CTA final. -->
+<div class="sticky" data-sticky aria-hidden="true">
+  <div class="sticky__inner">
+    <div class="sticky__brand">
+      <Image src={icon} alt="" widths={[64, 96]} sizes="32px" width={32} />
+      <span><b>Garniplay</b><small>7 dias de garantia</small></span>
+    </div>
+    <a class="cta sticky__cta" href={CHECKOUT_URL} data-cta tabindex="-1">Quero o Garniplay</a>
+  </div>
+</div>
+
+<style>
+  .sticky {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background: rgb(255 255 255 / 0.9);
+    -webkit-backdrop-filter: blur(14px) saturate(1.6);
+    backdrop-filter: blur(14px) saturate(1.6);
+    border-top: 1px solid rgb(34 26 58 / 0.08);
+    box-shadow: 0 -10px 30px -12px rgb(34 26 58 / 0.25);
+    transform: translateY(110%);
+    transition: transform 0.45s var(--ease-out);
+  }
+  .sticky:global(.on) { transform: none; }
+
+  .sticky__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: calc(var(--container) + var(--gutter) * 2);
+    margin: 0 auto;
+  }
+  .sticky__brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .sticky__brand img { width: 32px; height: 32px; flex: none; }
+  .sticky__brand span { display: flex; flex-direction: column; line-height: 1.15; }
+  .sticky__brand b { font-family: var(--font-display); font-size: 0.9375rem; color: var(--ink); }
+  .sticky__brand small { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+
+  .sticky__cta { min-height: 48px; padding: 10px 20px; font-size: 0.9375rem; }
+
+  @media (min-width: 1024px) {
+    .sticky {
+      top: 0;
+      bottom: auto;
+      padding: 10px var(--gutter);
+      border-top: 0;
+      border-bottom: 1px solid rgb(34 26 58 / 0.08);
+      box-shadow: 0 10px 30px -16px rgb(34 26 58 / 0.25);
+      transform: translateY(-110%);
+    }
+    .sticky__cta { min-height: 46px; }
+  }
+</style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-sticky]');
+  const heroCta = document.querySelector('[data-hero-cta]');
+  const final = document.querySelector('[data-final]');
+  if (bar && heroCta) {
+    let pastHero = false;
+    let atFinal = false;
+    const sync = () => {
+      const on = pastHero && !atFinal;
+      bar.classList.toggle('on', on);
+      bar.setAttribute('aria-hidden', String(!on));
+      bar.querySelector('a')!.tabIndex = on ? 0 : -1;
+    };
+    new IntersectionObserver(([e]) => {
+      // só conta como "passou da dobra" quando o CTA da hero saiu por cima
+      pastHero = !e.isIntersecting && e.boundingClientRect.top < 0;
+      sync();
+    }).observe(heroCta);
+    if (final) {
+      new IntersectionObserver(([e]) => {
+        atFinal = e.isIntersecting;
+        sync();
+      }, { rootMargin: '0px 0px -30% 0px' }).observe(final);
+    }
+  }
+</script>

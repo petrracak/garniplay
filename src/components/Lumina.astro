@@ -1,0 +1,717 @@
+---
+import Icon from './Icon.astro';
+
+const features = [
+  'cruza habilidade, competência, faixa etária e nível de dificuldade;',
+  'explica por que a atividade foi indicada;',
+  'sugere adaptações e variações de aplicação;',
+  'pode combinar atividades e propor um objetivo geral para a sessão;',
+  'leva você diretamente ao material recomendado.',
+];
+
+// Roteiro da demonstração. "think" é a linha que aparece enquanto a Lumina "pensa".
+const script = [
+  { from: 'user', text: 'Preciso trabalhar memória de curto prazo com uma criança de 8 anos que esquece parte das instruções enquanto realiza a tarefa.' },
+  { from: 'ai', think: 'Analisando o que você descreveu…', badge: 0, parts: [{ t: 'Antes de indicar, quero entender melhor: ela consegue recordar os primeiros elementos apresentados ou se confunde quando precisa selecionar e organizar mais de um item?' }] },
+  { from: 'user', text: 'Ela recorda alguns elementos, mas se confunde quando precisa selecionar e organizar vários.' },
+  {
+    from: 'ai',
+    think: 'Cruzando habilidade, competência, faixa etária e nível…',
+    badge: 1,
+    parts: [
+      { t: 'Uma possibilidade é a atividade ' },
+      { t: 'MCP-03 — Bagagem Certa', b: true },
+      { t: '. Ela estimula a manutenção e a seleção de informações durante uma tarefa com objetivo definido. Posso sugerir o nível, uma adaptação para 8 anos e uma sequência para a sessão.' },
+    ],
+    card: true,
+  },
+];
+
+const badges = [
+  { icon: 'search', text: 'Pergunta antes de recomendar' },
+  { icon: 'target', text: 'Explica por que indicou' },
+  { icon: 'levels', text: 'Sugere nível e adaptações' },
+] as const;
+---
+
+<section class="section lumina on-dark" id="lumina" aria-labelledby="lumina-title">
+  <div class="container lumina__grid">
+    <div class="lumina__head">
+      <p class="kicker" data-reveal style="--kicker-color: var(--blue)">Lumina — assistente inteligente de atividades</p>
+      <h2 class="h2" id="lumina-title" data-reveal style="--d:60ms">A Torre organiza as atividades. A Lumina ajuda você a <span class="lumina__glow">encontrá-las.</span></h2>
+      <p class="lead" data-reveal style="--d:120ms">
+        A Lumina é a assistente inteligente de atividades do Garniplay. Em vez de vasculhar módulos e abrir atividade por atividade, descreva a dificuldade observada. Se faltarem informações, a Lumina faz perguntas complementares antes de recomendar.
+      </p>
+    </div>
+
+    <div class="lumina__demo" data-reveal="scale">
+      <div class="demo" data-lumina data-script={JSON.stringify(script)}>
+        <div class="phone" aria-hidden="true">
+          <div class="phone__screen">
+            <div class="app__statusbar">
+              <span>9:41</span>
+              <span class="app__island"></span>
+              <span class="app__sys">
+                <svg viewBox="0 0 18 12" width="17" height="11"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+                <svg viewBox="0 0 26 12" width="24" height="11"><rect x="0.5" y="0.5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".45"/><rect x="2.5" y="2.5" width="16" height="7" rx="2"/><rect x="24" y="4" width="1.6" height="4" rx=".8" opacity=".45"/></svg>
+              </span>
+            </div>
+
+            <div class="app__head">
+              <span class="app__avatar">
+                <i style="--c:var(--pink);--w:22%"></i><i style="--c:var(--yellow);--w:44%"></i><i style="--c:var(--green);--w:60%"></i><i style="--c:var(--blue);--w:74%"></i>
+              </span>
+              <span class="app__who">
+                <b>Lumina</b>
+                <small data-status>assistente inteligente de atividades</small>
+              </span>
+            </div>
+
+            <div class="app__chat">
+              <div class="app__feed" data-feed>
+                <p class="app__day">Hoje</p>
+                {script.map((m) =>
+                  m.from === 'user' ? (
+                    <div class="msg msg--user">{m.text}</div>
+                  ) : (
+                    <div class="msg msg--ai">
+                      {m.parts!.map((p) => (p.b ? <strong>{p.t}</strong> : p.t))}
+                      {m.card && (
+                        <div class="act">
+                          <span class="act__code">MCP-03</span>
+                          <b class="act__title">Bagagem Certa</b>
+                          <span class="act__tags"><span>Memória de curto prazo</span><span>8 anos</span></span>
+                          <span class="act__btn">Abrir atividade recomendada</span>
+                        </div>
+                      )}
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+
+            <div class="app__composer">
+              <div class="app__input">
+                <span class="app__placeholder" data-placeholder>Descreva a dificuldade observada…</span>
+                <span data-input></span><span class="app__caret" data-caret></span>
+              </div>
+              <span class="app__send" data-send><Icon name="send" size={18} /></span>
+            </div>
+          </div>
+        </div>
+
+        {badges.map((b, i) => (
+          <span class={`badge badge--${i}`} data-badge={i} aria-hidden="true">
+            <Icon name={b.icon} size={16} /> {b.text}
+          </span>
+        ))}
+      </div>
+
+      <div class="lumina__meta">
+        <button type="button" class="replay" data-replay><Icon name="replay" size={16} /> Ver demonstração novamente</button>
+        <p>Exemplo ilustrativo. A recomendação considera as informações fornecidas pela profissional e a base de atividades do Garniplay.</p>
+      </div>
+
+      <!-- Transcrição para leitores de tela -->
+      <div class="sr-only">
+        <p>Demonstração de conversa com a Lumina:</p>
+        {script.map((m) => (
+          <p>{m.from === 'user' ? 'Profissional: ' + m.text : 'Lumina: ' + m.parts!.map((p) => p.t).join('')}</p>
+        ))}
+      </div>
+    </div>
+
+    <div class="lumina__body">
+      <ul class="lumina__list">
+        {features.map((f, i) => (
+          <li data-reveal style={`--d:${i * 60}ms`}><span><Icon name="check" size={14} stroke={3} /></span>{f}</li>
+        ))}
+      </ul>
+      <p data-reveal><strong>Sem ferramenta complicada:</strong> você conversa com a Lumina como falaria com uma colega. Não precisa aprender comandos técnicos nem navegar por uma interface complexa.</p>
+      <p class="lumina__decision" data-reveal><strong>A decisão clínica continua sendo sua. A busca e a organização ficam mais simples.</strong></p>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* Global porque o roteiro da demonstração cria elementos via JS (sem o escopo do Astro). */
+  .lumina {
+    overflow: hidden;
+    background:
+      radial-gradient(40% 50% at 78% 40%, rgb(2 144 249 / 0.32), transparent 70%),
+      radial-gradient(40% 40% at 70% 80%, rgb(242 12 117 / 0.25), transparent 70%),
+      linear-gradient(180deg, var(--night) 0%, #251053 100%);
+  }
+
+  .lumina__grid {
+    display: grid;
+    grid-template-areas: 'head' 'demo' 'body';
+    gap: 40px;
+  }
+  .lumina__head { grid-area: head; }
+  .lumina__demo { grid-area: demo; }
+  .lumina__body { grid-area: body; }
+  .lumina__head .lead { margin-top: 18px; }
+
+  .lumina__glow {
+    background: linear-gradient(90deg, #5cb8ff, #ff5aa6 60%, var(--yellow));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .lumina__list { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 12px; }
+  .lumina__list li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; }
+  .lumina__list li > span {
+    display: grid; place-items: center; width: 24px; height: 24px; margin-top: 1px;
+    border-radius: 50%; background: var(--yellow); color: var(--night);
+  }
+  .lumina__decision {
+    margin-top: 20px;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.07);
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+  /* ---------- Celular ---------- */
+  .demo {
+    position: relative;
+    margin: 0 auto;
+    perspective: 1400px;
+  }
+
+  .phone {
+    position: relative;
+    width: min(300px, 80vw);
+    margin: 0 auto;
+    aspect-ratio: 9 / 18.6;
+    padding: 10px;
+    border-radius: 46px;
+    background: linear-gradient(145deg, #3b2a63, #120a26 40%, #0b0617);
+    box-shadow:
+      inset 0 0 0 1.5px rgb(255 255 255 / 0.14),
+      inset 0 0 0 4px #0b0617,
+      0 40px 80px -20px rgb(0 0 0 / 0.6),
+      0 0 0 1px rgb(0 0 0 / 0.4);
+  }
+  .phone::before {
+    /* botões laterais */
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: 22%;
+    width: 3px;
+    height: 13%;
+    border-radius: 0 3px 3px 0;
+    background: #2a1d47;
+  }
+
+  .phone__screen {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 37px;
+    background: #f6f3fc;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-body);
+  }
+
+  .app__statusbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 22px 4px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .app__island {
+    position: absolute;
+    left: 50%;
+    top: 9px;
+    width: 30%;
+    height: 22px;
+    transform: translateX(-50%);
+    border-radius: 99px;
+    background: #0b0617;
+  }
+  .app__sys { display: inline-flex; gap: 5px; align-items: center; }
+  .app__sys svg { fill: currentColor; }
+
+  .app__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 12px;
+    background: #fff;
+    border-bottom: 1px solid #ece6f6;
+  }
+  .app__avatar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5px;
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, #4b2a8c, var(--night));
+    box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px rgb(129 44 188 / 0.25);
+  }
+  .app__avatar i { display: block; width: var(--w); height: 4.5px; border-radius: 9px; background: var(--c); }
+  .app__avatar i:first-child { height: 6px; border-radius: 6px 6px 2px 2px; }
+  .app__who { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+  .app__who b { font-family: var(--font-display); font-size: 14px; color: var(--ink); }
+  .app__who small {
+    font-size: 10.5px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s;
+  }
+  .app__who small.typing { color: var(--green); font-weight: 700; }
+
+  .app__chat {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18px);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 18px);
+  }
+  .app__feed {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 12px 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .app__day {
+    align-self: center;
+    margin: 0 0 4px;
+    padding: 2px 10px;
+    border-radius: 99px;
+    background: #ebe5f6;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .msg {
+    max-width: 86%;
+    padding: 9px 12px;
+    font-size: 12.5px;
+    line-height: 1.42;
+    border-radius: 16px;
+    margin: 0;
+  }
+  .msg--user {
+    align-self: flex-end;
+    background: var(--grape);
+    color: #fff;
+    border-bottom-right-radius: 5px;
+  }
+  .msg--ai {
+    align-self: flex-start;
+    background: #fff;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 1px 2px rgb(34 26 58 / 0.08);
+  }
+  .msg--ai strong { color: var(--pink-cta); }
+  .msg.pop { animation: pop 0.45s var(--ease-spring) both; }
+  .msg--user.pop { transform-origin: 100% 100%; }
+  .msg--ai.pop { transform-origin: 0% 100%; }
+  @keyframes pop { from { opacity: 0; transform: translateY(10px) scale(0.85); } }
+
+  /* "pensando" */
+  .msg .think {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .msg .think em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--muted) 30%, var(--purple) 50%, var(--muted) 70%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 1.4s linear infinite;
+  }
+  .msg .dots { display: inline-flex; gap: 3px; }
+  .msg .dots i {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--purple);
+    animation: dot 1s infinite ease-in-out;
+  }
+  .msg .dots i:nth-child(2) { animation-delay: 0.15s; background: var(--blue); }
+  .msg .dots i:nth-child(3) { animation-delay: 0.3s; background: var(--pink); }
+  @keyframes dot { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+  @keyframes shimmer { to { background-position: -120% 0; } }
+
+  .msg .word { animation: word 0.3s var(--ease-out) both; }
+  @keyframes word { from { opacity: 0; filter: blur(3px); } }
+
+  /* Card da atividade recomendada */
+  .act {
+    display: grid;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 11px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fff5fa, #f3ecff);
+    border: 1px solid #eadff7;
+  }
+  .act.pop { animation: pop 0.5s var(--ease-spring) both; }
+  .act__code {
+    justify-self: start;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: var(--grape);
+    color: #fff;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+  }
+  .act__title { font-family: var(--font-display); font-size: 14px; color: var(--ink); }
+  .act__tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .act__tags span {
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: #fff;
+    border: 1px solid #e6dcf3;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--grape);
+  }
+  .act__btn {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    margin-top: 4px;
+    padding: 8px;
+    border-radius: 99px;
+    background: var(--pink-cta);
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 800;
+    transition: transform 0.15s;
+  }
+  .act__btn.tap { transform: scale(0.95); }
+  .act__btn .ripple {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.55);
+    animation: ripple 0.7s var(--ease-out) forwards;
+  }
+  @keyframes ripple { to { transform: scale(14); opacity: 0; } }
+
+  /* Campo de digitação */
+  .app__composer {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 8px 10px 16px;
+    background: #fff;
+    border-top: 1px solid #ece6f6;
+  }
+  .app__input {
+    position: relative;
+    flex: 1;
+    min-height: 34px;
+    max-height: 76px;
+    overflow: hidden;
+    padding: 8px 12px;
+    border-radius: 18px;
+    background: #f3eff9;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .app__placeholder { position: absolute; left: 12px; top: 8px; color: #9a93ad; white-space: nowrap; }
+  .app__caret {
+    display: inline-block;
+    width: 1.5px;
+    height: 13px;
+    margin-left: 1px;
+    vertical-align: -2px;
+    background: var(--purple);
+    opacity: 0;
+  }
+  .app__caret.on { opacity: 1; animation: caret 0.9s steps(1) infinite; }
+  @keyframes caret { 50% { opacity: 0; } }
+  .app__send {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 50%;
+    background: #d9d2e6;
+    color: #fff;
+    transition: background-color 0.2s, transform 0.2s var(--ease-spring);
+  }
+  .app__send.ready { background: var(--pink-cta); }
+  .app__send.press { transform: scale(0.82); }
+
+  /* ---------- Selos que acompanham a conversa ---------- */
+  .badge {
+    position: absolute;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border-radius: 99px;
+    background: #fff;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 12px 28px -8px rgb(0 0 0 / 0.45);
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+    transition: opacity 0.4s var(--ease-out), transform 0.5s var(--ease-spring);
+  }
+  .badge svg { color: var(--pink-cta); flex: none; }
+  .badge.on { opacity: 1; transform: none; }
+  .badge--0 { top: 26%; left: -14%; }
+  .badge--1 { top: 52%; right: -16%; }
+  .badge--2 { bottom: 15%; left: -12%; }
+  .badge--1 svg { color: var(--blue); }
+  .badge--2 svg { color: var(--green); }
+
+  .lumina__meta { margin-top: 22px; text-align: center; }
+  .lumina__meta p { max-width: 30rem; margin: 10px auto 0; font-size: 0.8125rem; color: #a99fc9; }
+  .replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    border-radius: 99px;
+    background: rgb(255 255 255 / 0.06);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .replay:hover { background: rgb(255 255 255 / 0.12); }
+
+  /* Mobile/tablet: os selos viram chips abaixo do celular e acendem conforme a conversa */
+  @media (max-width: 1023px) {
+    .demo { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .phone { flex: 0 0 100%; max-width: min(300px, 80vw); margin-bottom: 14px; }
+    .badge {
+      position: static;
+      opacity: 0.45;
+      transform: none;
+      background: rgb(255 255 255 / 0.08);
+      color: #d9d2ee;
+      box-shadow: none;
+      border: 1px solid rgb(255 255 255 / 0.14);
+      transition: opacity 0.4s, background-color 0.4s, color 0.4s, transform 0.5s var(--ease-spring);
+    }
+    .badge svg { color: currentColor !important; }
+    .badge.on { opacity: 1; background: #fff; color: var(--ink); transform: scale(1.04); }
+    .badge.on svg { color: var(--pink-cta) !important; }
+  }
+
+  @media (min-width: 1024px) {
+    .lumina__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+      grid-template-areas: 'head demo' 'body demo';
+      column-gap: 72px;
+      row-gap: 32px;
+      align-items: start;
+    }
+    .lumina__demo { align-self: center; }
+    .demo { width: 330px; }
+    .phone { width: 100%; max-width: none; }
+  }
+</style>
+
+<script>
+  type Part = { t: string; b?: boolean };
+  type Msg = { from: 'user' | 'ai'; text?: string; think?: string; badge?: number; parts?: Part[]; card?: boolean };
+
+  const root = document.querySelector<HTMLElement>('[data-lumina]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (root && !reduce) {
+    const script: Msg[] = JSON.parse(root.dataset.script!);
+    const feed = root.querySelector<HTMLElement>('[data-feed]')!;
+    const chat = feed.parentElement!;
+    const input = root.querySelector<HTMLElement>('[data-input]')!;
+    const caret = root.querySelector<HTMLElement>('[data-caret]')!;
+    const placeholder = root.querySelector<HTMLElement>('[data-placeholder]')!;
+    const send = root.querySelector<HTMLElement>('[data-send]')!;
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
+    const badges = [...root.querySelectorAll<HTMLElement>('[data-badge]')];
+    const replay = document.querySelector<HTMLButtonElement>('[data-replay]');
+
+    let run = 0;
+    let visible = false;
+
+    class Cancelled extends Error {}
+    const wait = (ms: number, id: number) =>
+      new Promise<void>((res, rej) => setTimeout(() => (id === run ? res() : rej(new Cancelled())), ms));
+
+    const el = (tag: string, cls: string, html = '') => {
+      const n = document.createElement(tag);
+      n.className = cls;
+      n.innerHTML = html;
+      return n;
+    };
+
+    // O feed é ancorado embaixo: a mensagem nova empurra as antigas para cima.
+    // Animamos esse empurrão (FLIP) em vez de usar rolagem interna, que "prenderia" o dedo no celular.
+    let lift: Animation | null = null;
+    const grow = (change: () => void) => {
+      const before = feed.offsetHeight;
+      change();
+      const delta = feed.offsetHeight - before;
+      if (delta > 0) {
+        lift?.cancel();
+        lift = feed.animate([{ transform: `translateY(${delta}px)` }, { transform: 'none' }], {
+          duration: 380,
+          easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+        });
+      }
+    };
+
+    const reset = () => {
+      feed.innerHTML = '<p class="app__day">Hoje</p>';
+      input.textContent = '';
+      placeholder.style.opacity = '1';
+      send.classList.remove('ready');
+      caret.classList.remove('on');
+      status.textContent = 'assistente inteligente de atividades';
+      status.classList.remove('typing');
+      badges.forEach((b) => b.classList.remove('on'));
+    };
+
+    const typeUser = async (text: string, id: number) => {
+      placeholder.style.opacity = '0';
+      caret.classList.add('on');
+      for (let i = 1; i <= text.length; i++) {
+        input.textContent = text.slice(0, i);
+        if (i === 1) send.classList.add('ready');
+        await wait(text[i - 1] === ' ' ? 34 : 22 + Math.random() * 18, id);
+      }
+      await wait(380, id);
+      send.classList.add('press');
+      await wait(140, id);
+      send.classList.remove('press', 'ready');
+      caret.classList.remove('on');
+      input.textContent = '';
+      placeholder.style.opacity = '1';
+      const bubble = el('div', 'msg msg--user pop');
+      bubble.textContent = text;
+      grow(() => feed.append(bubble));
+    };
+
+    const aiReply = async (m: Msg, id: number) => {
+      await wait(500, id);
+      status.textContent = 'digitando…';
+      status.classList.add('typing');
+      const bubble = el('div', 'msg msg--ai pop', `<span class="think"><span class="dots"><i></i><i></i><i></i></span><em>${m.think}</em></span>`);
+      grow(() => feed.append(bubble));
+      await wait(1900, id);
+
+      grow(() => (bubble.innerHTML = ''));
+      if (m.badge !== undefined) badges[m.badge]?.classList.add('on');
+      for (const part of m.parts!) {
+        const host = part.b ? bubble.appendChild(document.createElement('strong')) : bubble;
+        for (const word of part.t.split(/(\s+)/)) {
+          if (!word) continue;
+          if (/^\s+$/.test(word)) { host.append(word); continue; }
+          grow(() => host.append(el('span', 'word', word.replace(/</g, '&lt;'))));
+          await wait(55, id);
+        }
+      }
+      status.textContent = 'assistente inteligente de atividades';
+      status.classList.remove('typing');
+
+      if (m.card) {
+        await wait(350, id);
+        const card = el(
+          'div',
+          'act pop',
+          '<span class="act__code">MCP-03</span><b class="act__title">Bagagem Certa</b><span class="act__tags"><span>Memória de curto prazo</span><span>8 anos</span></span><span class="act__btn">Abrir atividade recomendada</span>',
+        );
+        grow(() => bubble.append(card));
+        await wait(700, id);
+        badges[2]?.classList.add('on');
+        await wait(1600, id);
+        const btn = card.querySelector<HTMLElement>('.act__btn')!;
+        btn.classList.add('tap');
+        btn.append(el('span', 'ripple'));
+        await wait(160, id);
+        btn.classList.remove('tap');
+      }
+    };
+
+    const play = async () => {
+      const id = ++run;
+      reset();
+      try {
+        await wait(700, id);
+        for (const m of script) {
+          if (m.from === 'user') {
+            await wait(500, id);
+            await typeUser(m.text!, id);
+          } else {
+            await aiReply(m, id);
+            await wait(900, id);
+          }
+        }
+        await wait(6000, id);
+        if (visible) play();
+      } catch (e) {
+        if (!(e instanceof Cancelled)) throw e;
+      }
+    };
+
+    const stop = () => {
+      run++;
+    };
+
+    reset();
+    new IntersectionObserver(
+      ([e]) => {
+        visible = e.isIntersecting;
+        if (visible) play();
+        else stop();
+      },
+      { threshold: 0.45 },
+    ).observe(root);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop();
+      else if (visible) play();
+    });
+
+    replay?.addEventListener('click', () => play());
+  }
+</script>

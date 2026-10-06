@@ -1,0 +1,37 @@
+---
+---
+
+<section class="section paper-grid agora" aria-labelledby="agora-title">
+  <div class="container agora__grid">
+    <div>
+      <p class="kicker" data-reveal style="--kicker-color: var(--pink)">Por que começar agora</p>
+      <h2 class="h2" id="agora-title" data-reveal style="--d:60ms">O Garniplay não vai desaparecer. Mas o tempo gasto procurando atividades não volta.</h2>
+    </div>
+    <div class="agora__copy" data-reveal style="--d:120ms">
+      <p class="lead"><strong>Cada semana sem um sistema significa novas sessões começando em pesquisas, pastas e tentativas — antes mesmo de o aprendente chegar.</strong></p>
+      <p>Daqui a seis meses, você terá realizado dezenas de novas sessões. Você quer olhar para elas como escolhas orientadas por um sistema ou como tentativas feitas com o material que apareceu primeiro?</p>
+      <p class="agora__quote">A urgência não vem de um contador artificial. Vem do custo de continuar adiando uma organização que já pode começar na próxima sessão.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .agora__grid { display: grid; gap: 24px; }
+  .agora__copy .lead { margin-bottom: 0.9em; }
+  .agora__quote {
+    margin-top: 1.4em;
+    padding: 20px 22px;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    color: var(--grape);
+    letter-spacing: -0.01em;
+  }
+  @media (min-width: 900px) {
+    .agora__grid { grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+  }
+</style>

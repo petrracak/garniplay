@@ -1,0 +1,143 @@
+---
+import Floater from './Floater.astro';
+
+const faq: [string, string][] = [
+  ['Eu já tenho vários jogos e materiais. O Garniplay será mais do mesmo?', 'O diferencial não está apenas na quantidade. As atividades são organizadas por habilidades e competências específicas, e a Lumina ajuda você a localizar e adaptar uma proposta coerente com o objetivo da sessão.'],
+  ['Como funciona a Lumina?', 'Você conversa com ela em linguagem natural e descreve as dificuldades observadas. Quando necessário, a Lumina faz perguntas complementares e cruza as informações com a base das atividades para recomendar opções, justificar a escolha, sugerir nível, adaptações e variações e levar você ao material indicado.'],
+  ['A Lumina monta uma sessão completa?', 'Ela pode combinar atividades e sugerir um objetivo geral a partir das dificuldades informadas. Essa sugestão funciona como apoio ao planejamento: cabe à profissional analisar, ajustar e conduzir a sessão de acordo com o aprendente.'],
+  ['Se eu mencionar um diagnóstico, a Lumina define automaticamente o que trabalhar?', 'Não. O diagnóstico é usado apenas como contexto. A Lumina deve perguntar sobre as dificuldades observadas e relacioná-las às habilidades que podem demandar atenção. A decisão não é baseada somente no nome de um transtorno.'],
+  ['O Garniplay substitui meu planejamento ou raciocínio clínico?', 'Não. Ele organiza possibilidades de intervenção e orienta a aplicação. A análise das necessidades, a escolha, a condução e as adaptações continuam sendo feitas pela profissional.'],
+  ['Serve para quais faixas etárias?', 'Há possibilidades de aplicação e adaptação para 2 a 5 anos, crianças em idade escolar, adolescentes, adultos e idosos.'],
+  ['O que recebo em cada atividade?', 'Você recebe a lâmina da atividade e um guia de aplicação com objetivos, orientações, níveis de dificuldade, faixa etária, adaptações e pontos de observação. Algumas propostas incluem cartões ou peças para recorte.'],
+  ['Como funciona o acesso?', 'O acesso é realizado pela Hotmart e permanece disponível por 1 ano. Após a confirmação do pagamento, as orientações são enviadas ao e-mail usado na compra.'],
+  ['Tenho medo de continuar parecendo professora de reforço. O Garniplay ajuda nessa diferenciação?', 'O Garniplay foi organizado para estimular habilidades e competências relacionadas à aprendizagem, não para repetir exercícios de conteúdo escolar. Os guias ajudam você a definir o objetivo, conduzir a proposta e observar a resposta do aprendente, preservando a intencionalidade da intervenção psicopedagógica.'],
+  ['Ainda tenho poucos aprendentes. Compensa investir agora?', 'Se você está começando, ter um sistema organizado evita que cada novo atendimento exija uma busca do zero. O Garniplay pode acompanhar o crescimento da sua prática, com propostas para diferentes habilidades, níveis e etapas de vida. A decisão deve considerar o seu momento financeiro e se você pretende utilizar esse repertório nos próximos atendimentos.'],
+  ['Minha semana já está lotada. Vou ter tempo para usar?', 'O Garniplay não foi pensado como um curso que precisa ser concluído antes do uso. Ele funciona como material de consulta: você identifica o que deseja trabalhar, localiza a atividade, consulta o guia e faz os ajustes necessários. A Lumina — assistente inteligente de atividades — também ajuda a reduzir o tempo gasto procurando dentro do acervo.'],
+  ['Em quanto tempo percebo diferença na minha prática?', 'A primeira diferença tende a aparecer na organização: menos tempo procurando, mais clareza para escolher e critérios mais definidos para aplicar e observar. A evolução de cada aprendente depende de suas necessidades, da avaliação profissional, da frequência das intervenções e de outros fatores individuais; por isso, o Garniplay não promete resultado clínico em um prazo determinado.'],
+  ['O Garniplay é indicado para qualquer pessoa que queira atividades educativas?', 'Não. O Garniplay foi desenvolvido para psicopedagogas e neuropsicopedagogas com formação para analisar as dificuldades do aprendente e conduzir uma intervenção. Ele não substitui formação, avaliação ou raciocínio profissional. Se você procura apenas passatempos, exercícios escolares ou um protocolo que decida tudo por você, este produto provavelmente não é a escolha certa.'],
+  ['E se eu perceber que não é para mim?', 'Você tem 7 dias para conhecer o Garniplay. Se, dentro desse prazo, perceber que o produto não faz sentido para a sua prática, basta solicitar o reembolso pela Hotmart. Você não precisa justificar a sua decisão.'],
+];
+---
+
+<section class="section faq" id="faq" aria-labelledby="faq-title">
+  <Floater toy="cubo" size={80} sizeDesktop={150} style="top:-44px; left:-12px" speed={7} delay={-3} />
+  <div class="container faq__grid">
+    <div class="faq__head">
+      <p class="kicker" data-reveal style="--kicker-color: var(--blue)">Dúvidas frequentes</p>
+      <h2 class="h2" id="faq-title" data-reveal style="--d:60ms">Antes de decidir, veja estas respostas.</h2>
+    </div>
+
+    <div class="faq__list" data-faq>
+      {faq.map(([q, a], i) => (
+        <details class="qa" open={i === 0} data-reveal style={`--d:${Math.min(i, 5) * 40}ms`}>
+          <summary>
+            <span>{q}</span>
+            <span class="qa__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__body"><p>{a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq { background: var(--lilac); }
+  .faq__head { margin-bottom: 32px; }
+
+  .faq__list { display: grid; gap: 10px; }
+
+  .qa {
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .qa[open] { box-shadow: var(--shadow); }
+
+  summary {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 20px 20px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  summary::-webkit-details-marker { display: none; }
+
+  .qa__icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--lilac);
+    transition: background-color 0.3s, transform 0.4s var(--ease-spring);
+  }
+  .qa__icon::before,
+  .qa__icon::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 2.5px;
+    margin: -1.25px 0 0 -6px;
+    border-radius: 2px;
+    background: var(--grape);
+    transition: transform 0.4s var(--ease-spring), background-color 0.3s;
+  }
+  .qa__icon::after { transform: rotate(90deg); }
+  .qa[open] .qa__icon { background: var(--pink-cta); transform: rotate(180deg); }
+  .qa[open] .qa__icon::before,
+  .qa[open] .qa__icon::after { background: #fff; }
+  .qa[open] .qa__icon::after { transform: rotate(0deg); }
+
+  .qa__body { overflow: hidden; color: var(--text); }
+  .qa__body p { padding: 0 20px 22px; margin: 0; }
+
+  @media (min-width: 1024px) {
+    .faq__grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 72px; align-items: start; }
+    .faq__head { position: sticky; top: 120px; }
+    summary { padding: 22px 26px; font-size: 1.125rem; }
+    .qa__body p { padding: 0 26px 24px; }
+  }
+</style>
+
+<script>
+  // Abre/fecha com animação de altura, mantendo o <details> nativo (acessível e funciona sem JS).
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLDetailsElement>('[data-faq] details').forEach((d) => {
+    const summary = d.querySelector('summary')!;
+    const body = d.querySelector<HTMLElement>('.qa__body')!;
+    let anim: Animation | null = null;
+
+    summary.addEventListener('click', (e) => {
+      if (reduce) return;
+      e.preventDefault();
+      anim?.cancel();
+      if (d.open) {
+        const h = body.offsetHeight;
+        anim = body.animate([{ height: `${h}px`, opacity: 1 }, { height: '0px', opacity: 0 }], {
+          duration: 280,
+          easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+        });
+        anim.onfinish = () => (d.open = false);
+      } else {
+        d.open = true;
+        const h = body.offsetHeight;
+        anim = body.animate([{ height: '0px', opacity: 0 }, { height: `${h}px`, opacity: 1 }], {
+          duration: 360,
+          easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+        });
+      }
+    });
+  });
+</script>

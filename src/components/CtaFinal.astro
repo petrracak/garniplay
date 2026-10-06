@@ -1,0 +1,145 @@
+---
+import Icon from './Icon.astro';
+import Ring from './Ring.astro';
+import { CHECKOUT_URL } from '../config';
+---
+
+<section class="section final on-dark" id="final" aria-labelledby="final-title" data-final>
+  <Ring color="pink" size={70} class="final__ring final__ring--a" />
+  <Ring color="yellow" size={40} class="final__ring final__ring--b" />
+  <Ring color="blue" size={54} class="final__ring final__ring--c" />
+
+  <div class="container">
+    <header class="final__head">
+      <p class="kicker" data-reveal style="--kicker-color: var(--pink)">O próximo passo</p>
+      <h2 class="h2" id="final-title" data-reveal style="--d:60ms">Daqui a um ano, você vai estar em um de dois lugares.</h2>
+    </header>
+
+    <div class="paths">
+      <article class="path path--a" data-reveal>
+        <div class="path__art path__art--tabs" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <span class="path__tag">Primeiro caminho</span>
+        <p>Você continua abrindo o Google, procurando em pastas e começando cada planejamento com a mesma dúvida: “qual atividade eu uso agora?”</p>
+      </article>
+
+      <article class="path path--b" data-reveal style="--d:120ms">
+        <div class="path__art path__art--tower" aria-hidden="true">
+          <i style="--c:var(--pink);--w:16%"></i><i style="--c:var(--yellow);--w:40%"></i><i style="--c:var(--green);--w:56%"></i><i style="--c:var(--blue);--w:72%"></i><i style="--c:var(--purple);--w:88%"></i>
+        </div>
+        <span class="path__tag">Segundo caminho</span>
+        <p>Você olha para as sessões realizadas e percebe que construiu um repertório organizado, no qual cada atividade tem um objetivo e cada escolha tem um motivo.</p>
+      </article>
+    </div>
+
+    <div class="final__close">
+      <p class="lead" data-reveal>A sua intervenção não precisa começar em uma busca. Ela pode começar com uma decisão consciente — e, quando você precisar, com uma conversa com a Lumina.</p>
+      <div data-reveal style="--d:80ms">
+        <a class="cta cta--block" href={CHECKOUT_URL} data-cta>Quero o Garniplay agora</a>
+        <p class="cta-note">
+          <span><Icon name="check" />1 ano de acesso</span>
+          <span><Icon name="shield" />7 dias de garantia</span>
+          <span><Icon name="lock" />Compra segura pela Hotmart</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .final {
+    overflow: hidden;
+    background:
+      radial-gradient(50% 50% at 50% 0%, rgb(129 44 188 / 0.55), transparent 70%),
+      radial-gradient(40% 40% at 100% 100%, rgb(242 12 117 / 0.22), transparent 70%),
+      var(--night);
+  }
+  .final :global(.final__ring) { opacity: 0.85; animation: bob 8s ease-in-out infinite; }
+  .final :global(.final__ring--a) { top: 60px; left: -20px; }
+  .final :global(.final__ring--b) { top: 34%; right: 6%; animation-delay: -3s; }
+  .final :global(.final__ring--c) { bottom: 80px; left: 8%; animation-delay: -5s; }
+  @keyframes bob { 50% { transform: translateY(-12px) rotate(10deg); } }
+
+  .final__head { text-align: center; max-width: 46rem; margin: 0 auto; }
+
+  .paths {
+    display: grid;
+    gap: 16px;
+    max-width: 960px;
+    margin: clamp(36px, 5vw, 56px) auto 0;
+  }
+  .path {
+    position: relative;
+    padding: 26px 24px;
+    border-radius: var(--radius-lg);
+  }
+  .path p { margin: 12px 0 0; }
+  .path__tag {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 99px;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .path--a {
+    background: rgb(255 255 255 / 0.04);
+    border: 1px dashed rgb(255 255 255 / 0.2);
+    color: #b3a9cf;
+  }
+  .path--a .path__tag { background: rgb(255 255 255 / 0.08); color: #cfc6e6; }
+
+  .path--b {
+    /* borda com as cores da torre */
+    border: 2.5px solid transparent;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(120deg, var(--pink), var(--yellow), var(--green), var(--blue), var(--purple)) border-box;
+    color: var(--text);
+    box-shadow: 0 30px 60px -24px rgb(242 12 117 / 0.55);
+  }
+  .path--b .path__tag { background: var(--pink-soft); color: var(--pink-cta); }
+  .path--b p { color: var(--ink); font-weight: 600; }
+
+  .path__art { height: 64px; margin-bottom: 18px; position: relative; }
+  /* abas e pastas espalhadas */
+  .path__art--tabs i {
+    position: absolute;
+    width: 58px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1.5px solid rgb(255 255 255 / 0.25);
+    background: rgb(255 255 255 / 0.05);
+  }
+  .path__art--tabs i:nth-child(1) { left: 0; top: 14px; transform: rotate(-8deg); }
+  .path__art--tabs i:nth-child(2) { left: 40px; top: 2px; transform: rotate(6deg); }
+  .path__art--tabs i:nth-child(3) { left: 84px; top: 20px; transform: rotate(-3deg); }
+  .path__art--tabs i:nth-child(4) { left: 126px; top: 6px; transform: rotate(10deg); }
+  .path__art--tabs i:nth-child(5) { left: 170px; top: 18px; transform: rotate(-12deg); }
+
+  /* mini torre organizada */
+  .path__art--tower { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 2px; width: 92px; }
+  .path__art--tower i {
+    display: block;
+    width: var(--w);
+    height: 11px;
+    border-radius: 99px;
+    margin-inline: auto;
+    background: var(--c);
+    box-shadow: inset 0 2px 1px rgb(255 255 255 / 0.4), inset 0 -2px 2px rgb(0 0 0 / 0.15);
+  }
+  .path__art--tower i:first-child { height: 15px; border-radius: 99px 99px 4px 4px; }
+
+  .final__close { max-width: 44rem; margin: clamp(40px, 5vw, 56px) auto 0; text-align: center; }
+  .final__close .lead { margin-bottom: 28px; }
+  .final__close .cta { max-width: 420px; }
+  .final__close .cta-note { justify-content: center; }
+
+  @media (min-width: 768px) {
+    .paths { grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+    .path { padding: 36px 34px; }
+  }
+</style>

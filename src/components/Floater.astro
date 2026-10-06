@@ -1,0 +1,62 @@
+---
+// Brinquedo desfocado (efeito de primeiro plano) que flutua devagar, em posição absoluta.
+// Uso: <Floater toy="aviao" size={140} style="top:-60px; right:-30px" />
+import { Image } from 'astro:assets';
+import aviao from '../assets/brinquedos/aviao.webp';
+import cubo from '../assets/brinquedos/cubo.webp';
+
+interface Props {
+  toy: 'aviao' | 'cubo';
+  size?: number;
+  /** tamanho em telas ≥ 1024px */
+  sizeDesktop?: number;
+  style?: string;
+  /** espelha horizontalmente */
+  flip?: boolean;
+  /** duração do ciclo de flutuação, em segundos */
+  speed?: number;
+  delay?: number;
+  class?: string;
+}
+
+const { toy, size = 110, sizeDesktop, style = '', flip = false, speed = 6, delay = 0, class: className } = Astro.props;
+const src = toy === 'aviao' ? aviao : cubo;
+---
+
+<span
+  class:list={['floater', className]}
+  style={`--size:${size}px;--size-d:${sizeDesktop ?? Math.round(size * 1.5)}px;--speed:${speed}s;--delay:${delay}s;${style}`}
+  aria-hidden="true"
+>
+  <Image
+    src={src}
+    alt=""
+    widths={[200, 320, 480, 640]}
+    sizes={`(min-width: 1024px) ${sizeDesktop ?? Math.round(size * 1.5)}px, ${size}px`}
+    loading="lazy"
+    decoding="async"
+    class:list={{ flip }}
+  />
+</span>
+
+<style>
+  .floater {
+    position: absolute;
+    z-index: 3;
+    width: var(--size);
+    pointer-events: none;
+    animation: float-y var(--speed) ease-in-out var(--delay) infinite;
+    will-change: transform;
+  }
+  .floater img { width: 100%; height: auto; }
+  .floater img.flip { transform: scaleX(-1); }
+
+  @keyframes float-y {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+    50% { transform: translate3d(0, -18px, 0) rotate(3deg); }
+  }
+
+  @media (min-width: 1024px) {
+    .floater { width: var(--size-d); }
+  }
+</style>

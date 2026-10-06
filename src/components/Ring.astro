@@ -1,0 +1,38 @@
+---
+// Argola decorativa (a peça da torre vista de frente), em CSS puro.
+interface Props {
+  color?: 'pink' | 'yellow' | 'green' | 'blue' | 'purple';
+  size?: number;
+  class?: string;
+  style?: string;
+}
+const { color = 'pink', size = 56, class: className = '', style = '' } = Astro.props;
+---
+
+<span
+  class:list={['ring', `ring--${color}`, className]}
+  style={`--s:${size}px;${style}`}
+  aria-hidden="true"></span>
+
+<style>
+  .ring {
+    --c: var(--pink);
+    position: absolute;
+    width: var(--s);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 34% 28%, rgb(255 255 255 / 0.65), transparent 34%),
+      radial-gradient(circle at 70% 78%, rgb(0 0 0 / 0.22), transparent 46%),
+      var(--c);
+    -webkit-mask: radial-gradient(circle, transparent 31%, #000 32.5%);
+    mask: radial-gradient(circle, transparent 31%, #000 32.5%);
+    filter: drop-shadow(0 8px 14px rgb(34 26 58 / 0.18));
+  }
+  .ring--pink { --c: var(--pink); }
+  .ring--yellow { --c: var(--yellow); }
+  .ring--green { --c: var(--green); }
+  .ring--blue { --c: var(--blue); }
+  .ring--purple { --c: var(--purple); }
+</style>
