@@ -1,16 +1,21 @@
 ---
 import { Image } from 'astro:assets';
 import icon from '../assets/brand/favicon.png';
+import logo from '../assets/brand/logo-colorida.png';
 import { CHECKOUT_URL } from '../config';
 ---
 
 <!-- Mobile: barra inferior. Desktop: barra superior. Aparece depois da dobra e some no CTA final. -->
 <div class="sticky" data-sticky aria-hidden="true">
   <div class="sticky__inner">
+    <!-- Mobile: ícone + garantia (barra baixa e estreita). Desktop: logo completo. -->
     <div class="sticky__brand">
       <Image src={icon} alt="" widths={[64, 96]} sizes="32px" width={32} />
       <span><b>Garniplay</b><small>7 dias de garantia</small></span>
     </div>
+    <a class="sticky__logo" href="#topo" tabindex="-1">
+      <Image src={logo} alt="Garniplay" widths={[150, 300, 450]} sizes="150px" width={150} loading="lazy" />
+    </a>
     <a class="cta sticky__cta" href={CHECKOUT_URL} data-cta tabindex="-1">Quero o Garniplay</a>
   </div>
 </div>
@@ -48,6 +53,8 @@ import { CHECKOUT_URL } from '../config';
   .sticky__brand small { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
 
   .sticky__cta { min-height: 48px; padding: 10px 20px; font-size: 0.9375rem; }
+  .sticky__logo { display: none; }
+  .sticky__logo img { width: 150px; height: auto; }
 
   @media (min-width: 1024px) {
     .sticky {
@@ -60,6 +67,8 @@ import { CHECKOUT_URL } from '../config';
       transform: translateY(-110%);
     }
     .sticky__cta { min-height: 46px; }
+    .sticky__brand { display: none; }
+    .sticky__logo { display: block; }
   }
 </style>
 
@@ -74,7 +83,7 @@ import { CHECKOUT_URL } from '../config';
       const on = pastHero && !atFinal;
       bar.classList.toggle('on', on);
       bar.setAttribute('aria-hidden', String(!on));
-      bar.querySelector('a')!.tabIndex = on ? 0 : -1;
+      bar.querySelectorAll('a').forEach((a) => (a.tabIndex = on ? 0 : -1));
     };
     new IntersectionObserver(([e]) => {
       // só conta como "passou da dobra" quando o CTA da hero saiu por cima

@@ -11,8 +11,6 @@ export const SITE = {
 };
 
 export const LEGAL = {
-  company: '[Razão social]',
-  cnpj: '[CNPJ]',
   terms: '#',
   privacy: '#',
   support: '#',

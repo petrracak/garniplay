@@ -16,7 +16,7 @@ Abre em http://localhost:4321.
 | O quê | Onde |
 |---|---|
 | Link do checkout (todos os botões) | `src/config.ts` → `CHECKOUT_URL` |
-| Razão social, CNPJ, termos, privacidade, suporte | `src/config.ts` → `LEGAL` |
+| Links de termos, privacidade e suporte | `src/config.ts` → `LEGAL` |
 | Título e descrição para Google/WhatsApp | `src/config.ts` → `SITE` |
 | Textos de cada seção | `src/components/<Seção>.astro` |
 | Cores, fontes, botões | `src/styles/global.css` |
@@ -37,4 +37,4 @@ O script recorta a foto da hero, gera favicons e a imagem de compartilhamento (`
 - [ ] VSL (vturb) na hero: espaço marcado em `src/components/Hero.astro`
 - [ ] Depoimentos: marcados em `src/pages/index.astro`
 - [ ] Seção de preço: marcada em `src/pages/index.astro`
-- [ ] Link do checkout e dados legais em `src/config.ts`
+- [ ] Link do checkout e links de termos/privacidade/suporte em `src/config.ts`

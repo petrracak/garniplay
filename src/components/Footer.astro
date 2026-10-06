@@ -17,7 +17,19 @@ const year = new Date().getFullYear();
         <a href={LEGAL.privacy}>Política de Privacidade</a>
         <a href={LEGAL.support}>Suporte</a>
       </nav>
-      <p>{LEGAL.company} • CNPJ {LEGAL.cnpj}</p>
+      <!-- Crédito do estúdio. O ícone gira 45°, que é exatamente a simetria da marca:
+           volta a ficar idêntico a si mesmo. -->
+      <a
+        class="credit"
+        href="https://www.instagram.com/petr_racak"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Desenvolvido por Racak Studio · Instagram"
+      >
+        Desenvolvido por
+        <svg class="credit__icon" viewBox="0 0 675 675" fill="currentColor" aria-hidden="true"><path d="M320.861 264.046L251.717 219.51L209.294 23.35L317.388 0L361.019 201.746L320.861 264.096V264.046ZM416.274 457.136L353.873 416.928L309.337 486.072L350.149 674.733L458.243 651.383L416.274 457.136ZM218.604 422.765L110.409 590.643L203.356 650.578L309.337 486.122L292.176 406.863L218.554 422.765H218.604ZM471.428 30.4455L361.019 201.695L376.921 275.318L456.18 258.208L564.375 90.3301L471.428 30.4455ZM87.2604 113.529L27.3255 206.476L195.153 314.671L268.827 298.718L251.717 219.51L87.2604 113.529ZM479.53 366.353L400.271 383.463L416.223 457.186L587.473 567.545L647.408 474.598L479.53 366.403V366.353ZM0 356.842L23.35 464.936L218.554 422.715L260.926 356.993L195.153 314.621L0 356.842ZM651.383 216.037L456.18 258.259L413.808 323.981L479.53 366.353L674.733 324.132L651.383 216.037Z" /></svg>
+        Racak Studio
+      </a>
     </div>
   </div>
 </footer>
@@ -35,7 +47,24 @@ const year = new Date().getFullYear();
   .footer__legal nav { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-bottom: 10px; }
   .footer__legal a { color: #fff; text-decoration: none; font-weight: 600; }
   .footer__legal a:hover { text-decoration: underline; }
-  .footer__legal p { margin: 0; }
+
+  .footer__legal .credit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-block: 6px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: rgb(255 255 255 / 0.4);
+    transition: color 0.3s;
+  }
+  .footer__legal .credit:hover { color: rgb(255 255 255 / 0.7); text-decoration: none; }
+  .credit__icon {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .credit:hover .credit__icon { transform: rotate(45deg); }
 
   @media (max-width: 1023px) {
     /* espaço para a barra fixa de compra */

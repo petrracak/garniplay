@@ -18,7 +18,7 @@ import Icon from './Icon.astro';
         src={heroPhoto}
         alt="Fernanda Garnizet sorrindo, cercada de brinquedos pedagógicos"
         widths={[480, 720, 960, 1050]}
-        sizes="(min-width: 1024px) min(46vw, 640px), (min-width: 600px) 560px, 100vw"
+        sizes="(min-width: 1024px) min(66vw, 860px), (min-width: 600px) 560px, 100vw"
         quality={78}
         loading="eager"
         fetchpriority="high"
@@ -215,7 +215,7 @@ import Icon from './Icon.astro';
 
     .hero__grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
       align-items: center;
       gap: 32px;
       min-height: clamp(660px, 90vh, 880px);
@@ -223,13 +223,16 @@ import Icon from './Icon.astro';
     .hero__media {
       order: 2;
       width: 100%;
-      max-width: 640px;
-      margin: 0 auto;
+      margin: 0;
       align-self: center;
-      padding-top: 56px; /* compensa o logo no topo para o centro ótico ficar alinhado ao texto */
+      padding-top: 40px; /* compensa o logo no topo para o centro ótico ficar alinhado ao texto */
     }
     .hero__media img {
-      width: 100%;
+      /* maior que a coluna: o recorte tem bastante respiro branco em volta da Fernanda,
+         então a foto cresce para a direita sem invadir o texto */
+      width: 124%;
+      max-width: none;
+      margin-left: -8%;
       aspect-ratio: 1;
       object-position: 50% 0%;
       /* a foto termina no blazer: esfuma a base para não ficar um corte seco */
@@ -247,5 +250,11 @@ import Icon from './Icon.astro';
     .trust { max-width: 520px; }
     .trust b { justify-content: flex-start; }
     .trust li { font-size: 0.875rem; }
+  }
+
+  /* Notebooks menores: a coluna de texto precisa de mais espaço, então a foto cresce menos */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 24px; }
+    .hero__media img { width: 116%; margin-left: 0; }
   }
 </style>
