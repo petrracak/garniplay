@@ -1,0 +1,303 @@
+---
+import Icon from '../Icon.astro';
+import Floater from '../Floater.astro';
+
+const stack = [
+  { icon: 'video', t: 'Aulas gravadas', d: 'Assista quando e onde quiser pelo celular, tablet ou computador, durante o período de acesso.' },
+  { icon: 'stack', t: '10 módulos do IPS', d: 'Fundamentos, evolução, planejamento, parceria com família e escola, observação, recursos, diferentes condições, Alta, registros e relatórios.' },
+  { icon: 'quiz', t: 'Quiz a cada 2 módulos', d: 'Checagem de compreensão dos critérios principais antes de avançar.' },
+  { icon: 'download', t: 'Material de Intervenção para download', d: 'Capítulos do Manual de Intervenção Psicopedagógica para baixar, imprimir e manter ao seu lado durante os planejamentos e atendimentos.' },
+  { icon: 'chat', t: 'Tutora com IA disponível 24 horas', d: 'Ajuda a esclarecer dúvidas sobre as aulas, revisar conceitos e localizar conteúdos dentro da formação.' },
+  { icon: 'clock', t: '1 ano de acesso', d: 'Tempo para estudar, revisar e retornar ao conteúdo conforme a prática exigir.' },
+  { icon: 'shield', t: 'Garantia própria de 7 dias', d: 'Independente da garantia do Garniplay.' },
+] as const;
+const bonus = ['Atividades de Estimulação — Parte 1', 'Atividades de Estimulação — Parte 2', 'Estimulação em Adolescentes, Adultos e Idosos'];
+const devices = [
+  { icon: 'phone', t: 'Celular' },
+  { icon: 'tablet', t: 'Tablet' },
+  { icon: 'laptop', t: 'Computador' },
+] as const;
+const downloads = [
+  'Aulas gravadas disponíveis dentro do período de acesso;',
+  'capítulos do Manual para baixar e imprimir;',
+  'quizzes para revisar os critérios principais;',
+  'consulta ao conteúdo conforme a necessidade da prática.',
+];
+---
+
+<section class="section ips-recebe on-dark" aria-labelledby="ips-recebe-title">
+  <Floater toy="cubo" size={88} sizeDesktop={160} style="top:-48px; left:-16px" speed={7} />
+  <div class="container">
+    <p class="kicker" data-reveal style="--kicker-color: var(--sage)">Tudo o que você recebe</p>
+    <h2 class="h2 measure" id="ips-recebe-title" data-reveal style="--d:60ms">Uma estrutura para estudar, consultar e voltar quando a prática trouxer novas perguntas.</h2>
+
+    <ul class="stack">
+      {stack.map((s, i) => (
+        <li data-reveal style={`--d:${Math.min(i, 4) * 50}ms`}>
+          <span class="stack__icon"><Icon name={s.icon} size={20} /></span>
+          <div><h3>{s.t}</h3><p>{s.d}</p></div>
+        </li>
+      ))}
+    </ul>
+
+    <ul class="ips-bonus">
+      {bonus.map((b, i) => (
+        <li data-reveal style={`--d:${i * 90}ms`}>
+          <span>Bônus {i + 1}</span>
+          <h3>{b}</h3>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Manual + dispositivos -->
+    <div class="showcase" data-reveal>
+      <div class="book" aria-hidden="true">
+        <div class="book__cover">
+          <span class="book__kicker">Material para download</span>
+          <strong class="book__title">Manual de Intervenção Psicopedagógica</strong>
+          <img class="book__logo" src="/ips/logo-escura.svg" alt="" width="1816" height="339" loading="lazy" />
+          <span class="book__author">Fernanda Garnizet</span>
+        </div>
+      </div>
+      <div class="showcase__copy">
+        <p class="kicker" style="--kicker-color: var(--yellow)">Estude no seu ritmo</p>
+        <h3 class="showcase__title">Aulas gravadas para assistir quando e onde quiser.</h3>
+        <p>Você acessa o IPS pela área de membros e pode assistir às aulas pelo celular, tablet ou computador. O conteúdo fica disponível durante 1 ano para que você estude, revise e retorne aos módulos conforme os atendimentos trouxerem novas perguntas.</p>
+        <ul class="devices">
+          {devices.map((d) => <li><Icon name={d.icon} size={24} /><b>{d.t}</b></li>)}
+        </ul>
+        <ul class="dl">
+          {downloads.map((d) => <li><Icon name="check" size={16} stroke={3} />{d}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tutora com IA -->
+    <div class="tutor" data-reveal>
+      <div class="tutor__copy">
+        <p class="kicker" style="--kicker-color: var(--sage)">Apoio ao estudo, 24 horas</p>
+        <h3 class="showcase__title">Tutora com IA disponível 24 horas</h3>
+        <p>Quando surgir uma dúvida durante o estudo, a tutora consulta os conteúdos do IPS para ajudar você a esclarecer conceitos, localizar a aula relacionada e revisar os critérios apresentados nos módulos.</p>
+        <p class="tutor__note">A tutora apoia o seu estudo com base nos conteúdos do IPS. Ela não realiza supervisão de casos, não decide a condução de um atendimento e não substitui a sua análise profissional.</p>
+      </div>
+      <div class="chat" aria-label="Exemplo de conversa com a tutora de IA dentro do IPS">
+        <div class="chat__head">
+          <span class="chat__avatar" aria-hidden="true">IA</span>
+          <span><b>Tutora IA do IPS</b><small>disponível 24 horas</small></span>
+        </div>
+        <div class="chat__body">
+          <p class="bubble bubble--user">Em qual aula encontro os critérios para decidir se mantenho ou avanço?</p>
+          <div class="reply">
+          <p class="bubble bubble--typing" aria-hidden="true"><i></i><i></i><i></i></p>
+          <p class="bubble bubble--ai">Esse tema é trabalhado no conteúdo sobre acompanhamento da evolução e critérios de progressão. Posso abrir a aula correspondente para você revisar.<span class="bubble__link"><Icon name="play" size={16} /> Abrir aula relacionada</span></p>
+          </div>
+        </div>
+        <p class="chat__disclaimer">Exemplo ilustrativo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ips-recebe {
+    background:
+      radial-gradient(40% 30% at 0% 0%, rgb(193 212 187 / 0.14), transparent 70%),
+      radial-gradient(50% 40% at 100% 50%, rgb(129 44 188 / 0.4), transparent 70%),
+      var(--night);
+  }
+
+  /* ---------- Lista do que está incluso ---------- */
+  .stack {
+    list-style: none;
+    margin: clamp(32px, 5vw, 52px) 0 0;
+    padding: 0;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    color: var(--text);
+    overflow: hidden;
+    box-shadow: 0 30px 60px -24px rgb(0 0 0 / 0.5);
+  }
+  .stack li {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 18px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stack li:last-child { border-bottom: 0; background: var(--sage-soft); }
+  .stack__icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--sage-soft);
+    color: var(--sage-deep);
+  }
+  .stack li:last-child .stack__icon { background: #fff; }
+  .stack h3 { font-size: 1.0625rem; letter-spacing: -0.015em; color: var(--ink); margin: 2px 0 4px; }
+  .stack p { margin: 0; font-size: 0.9375rem; }
+
+  .ips-bonus { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }
+  .ips-bonus li {
+    padding: 20px 22px;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.06);
+    border: 1px dashed rgb(193 212 187 / 0.4);
+  }
+  .ips-bonus span {
+    display: inline-block;
+    margin-bottom: 6px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    background: var(--yellow);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .ips-bonus h3 { font-size: 1.0625rem; letter-spacing: -0.015em; }
+
+  /* ---------- Manual + dispositivos ---------- */
+  .showcase, .tutor {
+    display: grid;
+    gap: 36px;
+    margin-top: clamp(40px, 6vw, 64px);
+    padding: 28px 22px;
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+  .showcase__title { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); letter-spacing: -0.03em; margin-bottom: 14px; }
+
+  .book { display: grid; place-items: center; padding: 10px 0; perspective: 1000px; }
+  .book__cover {
+    position: relative;
+    width: 210px;
+    aspect-ratio: 0.71;
+    padding: 24px 20px 20px 28px;
+    border-radius: 6px 14px 14px 6px;
+    background:
+      linear-gradient(90deg, rgb(0 0 0 / 0.18) 0 10px, rgb(255 255 255 / 0.25) 10px 12px, transparent 12px),
+      linear-gradient(165deg, #d6e3d1, var(--sage) 55%, #a9bfa2);
+    color: #121a12;
+    box-shadow: 18px 22px 40px -12px rgb(0 0 0 / 0.6), inset -3px 0 0 rgb(255 255 255 / 0.25);
+    rotate: -5deg;
+    transition: rotate 0.6s var(--ease-spring);
+    display: flex;
+    flex-direction: column;
+  }
+  .showcase:hover .book__cover { rotate: 0deg; }
+  .book__kicker { font-family: var(--font-display); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #3f5a39; }
+  .book__title { margin-top: 14px; font-family: Georgia, 'Times New Roman', serif; font-size: 1.125rem; line-height: 1.15; color: #121a12; overflow-wrap: anywhere; hyphens: auto; }
+  .book__logo { width: 100%; height: auto; margin-top: auto; }
+  .book__author { margin-top: 10px; font-size: 0.6875rem; font-weight: 700; color: #3f5a39; }
+
+  .devices { list-style: none; margin: 22px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .devices li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgb(255 255 255 / 0.07);
+    border: 1px solid rgb(255 255 255 / 0.14);
+    color: var(--sage);
+  }
+  .devices b { color: #fff; font-size: 0.875rem; }
+
+  .dl { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .dl li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; color: #d9d2ee; }
+  .dl :global(svg) { color: var(--yellow); margin-top: 4px; }
+
+  /* ---------- Tutora IA ---------- */
+  .tutor__note {
+    padding: 14px 16px;
+    border-left: 3px solid var(--yellow);
+    border-radius: 0 12px 12px 0;
+    background: rgb(255 255 255 / 0.06);
+    font-size: 0.875rem;
+    color: #cfc6e6;
+  }
+
+  .chat {
+    padding: 16px;
+    border-radius: 24px;
+    background: #f6f3fc;
+    color: var(--ink);
+    box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.55);
+  }
+  .chat__head { display: flex; align-items: center; gap: 10px; padding: 2px 4px 14px; border-bottom: 1px solid #e6dff2; }
+  .chat__avatar {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--sage);
+    color: #121a12;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+  .chat__head span:last-child { display: flex; flex-direction: column; line-height: 1.2; }
+  .chat__head b { font-family: var(--font-display); font-size: 0.9375rem; }
+  .chat__head small { font-size: 0.75rem; color: #2f8d20; font-weight: 700; }
+
+  .chat__body { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; min-height: 250px; }
+  .bubble { max-width: 88%; margin: 0; padding: 11px 14px; border-radius: 16px; font-size: 0.9rem; line-height: 1.45; }
+  .bubble--user { align-self: flex-end; background: var(--grape); color: #fff; border-bottom-right-radius: 5px; }
+  .bubble--ai { align-self: flex-start; background: #fff; border-bottom-left-radius: 5px; box-shadow: 0 1px 2px rgb(34 26 58 / 0.08); }
+  .bubble__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 6px 12px;
+    border-radius: 99px;
+    background: var(--sage-soft);
+    color: var(--sage-deep);
+    font-weight: 800;
+    font-size: 0.8125rem;
+  }
+  /* digitando e resposta ocupam o mesmo lugar: sem "pulo" de layout */
+  .reply { display: grid; justify-items: start; }
+  .reply > .bubble { grid-area: 1 / 1; }
+  .bubble--typing { align-self: start; display: inline-flex; gap: 4px; background: #fff; opacity: 0; }
+  .bubble--typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--sage-deep); animation: dot 1s infinite ease-in-out; }
+  .bubble--typing i:nth-child(2) { animation-delay: 0.15s; }
+  .bubble--typing i:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes dot { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+  .chat__disclaimer { margin: 10px 4px 0; font-size: 0.75rem; color: var(--muted); }
+
+  /* Sequência da conversa quando o painel aparece (só com JS ativo) */
+  :global(.js) .tutor .bubble--user,
+  :global(.js) .tutor .bubble--ai { opacity: 0; transform: translateY(10px) scale(0.96); }
+  :global(.js) .tutor:global(.is-in) .bubble--user { animation: bubble-in 0.5s var(--ease-spring) 0.4s forwards; }
+  :global(.js) .tutor:global(.is-in) .bubble--typing { animation: typing 1.6s linear 1.1s both; }
+  :global(.js) .tutor:global(.is-in) .bubble--ai { animation: bubble-in 0.5s var(--ease-spring) 2.7s forwards; }
+  @keyframes bubble-in { to { opacity: 1; transform: none; } }
+  @keyframes typing { 0%, 100% { opacity: 0; } 10%, 85% { opacity: 1; } }
+
+  @media (min-width: 720px) {
+    .ips-bonus { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  }
+  @media (min-width: 900px) {
+    .stack li { grid-template-columns: 44px 0.8fr 1.2fr; padding: 20px 28px; align-items: center; }
+    .stack li > div { display: contents; }
+    .stack h3 { margin: 0; }
+    .stack__icon { width: 44px; height: 44px; }
+    .showcase, .tutor { padding: 44px 48px; gap: 56px; align-items: center; }
+    .showcase { grid-template-columns: 0.8fr 1.2fr; }
+    .tutor { grid-template-columns: 1.05fr 0.95fr; }
+    .book__cover { width: 250px; }
+    .book__title { font-size: 1.3125rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .tutor .bubble--user, :global(.js) .tutor .bubble--ai { opacity: 1; transform: none; }
+  }
+</style>

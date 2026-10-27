@@ -1,0 +1,34 @@
+---
+import Decision from './Decision.astro';
+import Ring from '../Ring.astro';
+import { UPSELL } from '../../config';
+---
+
+<section class="section fechamento" aria-labelledby="fechamento-title" data-final>
+  <Ring color="pink" size={52} class="fech__ring fech__ring--a" />
+  <Ring color="green" size={34} class="fech__ring fech__ring--b" />
+  <div class="container">
+    <p class="kicker fechamento__kicker" data-reveal style="--kicker-color: var(--pink)">Sua decisão</p>
+    <h2 class="h2 fechamento__title" id="fechamento-title" data-reveal style="--d:60ms">A atividade certa orienta a sessão. A visão do processo orienta o caminho.</h2>
+    <div class="fechamento__text" data-reveal style="--d:120ms">
+      <p>Nesta página, você pode incluir o IPS agora, com um clique e sem preencher novamente os dados do cartão. A condição apresentada é de {UPSELL.installments} ou {UPSELL.cash}, com 1 ano de acesso e uma garantia própria de 7 dias. Em futuras ofertas, o preço e até a disponibilidade do IPS para compra separada poderão ser diferentes.</p>
+      <p>Se este aprofundamento faz sentido para o seu momento profissional, esta é a ocasião de integrar os dois produtos desde o início.</p>
+    </div>
+    <div data-reveal>
+      <Decision />
+    </div>
+    <p class="fechamento__sign">Fernanda Garnizet • Garniplay + IPS</p>
+  </div>
+</section>
+
+<style>
+  .fechamento { background: #fff; text-align: center; overflow: hidden; }
+  .fechamento :global(.fech__ring) { opacity: 0.85; animation: bob 8s ease-in-out infinite; }
+  .fechamento :global(.fech__ring--a) { top: 60px; left: -16px; }
+  .fechamento :global(.fech__ring--b) { bottom: 90px; right: 6%; animation-delay: -3s; }
+  @keyframes bob { 50% { transform: translateY(-12px) rotate(10deg); } }
+
+  .fechamento__title { max-width: 22ch; margin: 0 auto; }
+  .fechamento__text { max-width: 44rem; margin: 22px auto 36px; color: var(--text); }
+  .fechamento__sign { margin: 48px 0 0; font-size: 0.875rem; color: var(--muted); }
+</style>

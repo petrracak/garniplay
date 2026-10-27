@@ -1,0 +1,143 @@
+---
+---
+
+<section class="section paper-grid territorios" aria-labelledby="territorios-title">
+  <div class="container">
+    <p class="kicker" data-reveal style="--kicker-color: var(--purple)">Dois territórios complementares</p>
+    <h2 class="h2 measure" id="territorios-title" data-reveal style="--d:60ms">Uma boa sessão precisa da atividade certa. Um bom processo precisa conectar as sessões.</h2>
+
+    <div class="terr">
+      <article class="terr__card" data-reveal>
+        <div class="terr__viz terr__viz--session" aria-hidden="true">
+          <span class="dot dot--big"></span>
+        </div>
+        <p class="terr__label">A sessão</p>
+        <h3>O que o Garniplay resolve</h3>
+        <p class="terr__q">“Qual atividade aplicar para esta habilidade, nesta idade e neste momento?”</p>
+        <span class="terr__chip terr__chip--done">Resolvido pelo Garniplay</span>
+      </article>
+
+      <article class="terr__card terr__card--ips" data-reveal style="--d:120ms">
+        <div class="terr__viz terr__viz--process" aria-hidden="true">
+          <svg viewBox="0 0 260 70" preserveAspectRatio="none">
+            <path class="terr__path" d="M10 52 C 50 52, 50 18, 90 22 S 140 56, 175 40 S 220 10, 250 16" />
+          </svg>
+          <span class="dot" style="left:4%;top:74%"></span>
+          <span class="dot" style="left:34%;top:31%"></span>
+          <span class="dot" style="left:66%;top:57%"></span>
+          <span class="flag" style="left:96%;top:22%">Alta</span>
+        </div>
+        <p class="terr__label">O processo</p>
+        <h3>A pergunta que vem depois</h3>
+        <p class="terr__q">“Como conduzir o caminho do planejamento até a Alta, com critérios profissionais?”</p>
+        <span class="terr__chip terr__chip--ips">Território do IPS</span>
+      </article>
+    </div>
+
+    <div class="bridge" data-reveal>
+      <p><strong>O Garniplay cumpre o papel para o qual foi criado:</strong> orientar a escolha e a aplicação da atividade. A Ficha de Acompanhamento ajuda você a registrar o que aconteceu. O IPS ensina como interpretar essa evolução e transformar os registros em decisões ao longo do processo.</p>
+      <p class="bridge__key"><strong>O problema não é faltar uma atividade para a próxima sessão.</strong> É não ter critérios para transformar a resposta do aprendente em uma decisão de continuidade.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .terr { display: grid; gap: 16px; margin-top: clamp(32px, 5vw, 52px); }
+
+  .terr__card {
+    position: relative;
+    padding: 24px 22px 26px;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .terr__card--ips {
+    background: linear-gradient(160deg, #23104f, var(--night));
+    color: #d9d2ee;
+    box-shadow: var(--shadow);
+  }
+  .terr__card--ips h3 { color: #fff; }
+
+  .terr__viz { position: relative; height: 72px; margin-bottom: 18px; border-radius: 16px; background: var(--lilac); }
+  .terr__card--ips .terr__viz { background: rgb(255 255 255 / 0.06); }
+  .terr__viz svg { position: absolute; inset: 8px 6%; width: 88%; height: calc(100% - 16px); overflow: visible; }
+  .terr__path {
+    fill: none;
+    stroke: var(--sage);
+    stroke-width: 3;
+    stroke-dasharray: 6 7;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .dot {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border-radius: 50%;
+    background: var(--sage);
+    box-shadow: 0 0 0 5px rgb(193 212 187 / 0.2);
+  }
+  .terr__viz--process .dot { left: 0; }
+  .dot--big {
+    left: 50%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    background: var(--pink);
+    box-shadow: 0 0 0 8px rgb(242 12 117 / 0.14);
+  }
+  .flag {
+    position: absolute;
+    transform: translate(-100%, -50%);
+    padding: 3px 9px;
+    border-radius: 99px;
+    background: var(--yellow);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+  }
+
+  .terr__label {
+    margin: 0 0 6px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pink-cta);
+  }
+  .terr__card--ips .terr__label { color: var(--sage); }
+  .terr__card h3 { font-size: 1.375rem; letter-spacing: -0.025em; }
+  .terr__q { margin: 12px 0 18px; font-size: 1.0625rem; line-height: 1.5; }
+  .terr__chip {
+    display: inline-flex;
+    padding: 6px 12px;
+    border-radius: 99px;
+    font-size: 0.8125rem;
+    font-weight: 800;
+  }
+  .terr__chip--done { background: var(--green-soft); color: #2f8d20; }
+  .terr__chip--ips { background: var(--sage); color: var(--sage-deep); }
+
+  .bridge {
+    max-width: 52rem;
+    margin: clamp(32px, 5vw, 48px) auto 0;
+    padding: 24px 22px;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    border-left: 5px solid var(--purple);
+  }
+  .bridge__key { margin-top: 14px; padding-top: 14px; border-top: 1px dashed #dcd3ea; color: var(--grape); }
+  .bridge__key strong { color: var(--grape); }
+
+  @media (min-width: 900px) {
+    .terr { grid-template-columns: 1fr 1fr; gap: 22px; }
+    .terr__card { padding: 32px 32px 34px; }
+    .terr__viz { height: 92px; }
+    .bridge { padding: 32px 36px; }
+  }
+</style>

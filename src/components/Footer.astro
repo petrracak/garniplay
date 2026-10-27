@@ -2,10 +2,15 @@
 import { Image } from 'astro:assets';
 import logo from '../assets/brand/logo-branca.png';
 import { LEGAL } from '../config';
+interface Props {
+  /** reserva espaço no fim da página para a barra fixa de compra do mobile */
+  stickyBar?: boolean;
+}
+const { stickyBar = true } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
+<footer class:list={["footer", { "footer--bar": stickyBar }]}>
   <div class="container footer__grid">
     <div>
       <Image src={logo} alt="Garniplay" widths={[160, 320]} sizes="160px" width={160} class="footer__logo" />
@@ -68,7 +73,7 @@ const year = new Date().getFullYear();
 
   @media (max-width: 1023px) {
     /* espaço para a barra fixa de compra */
-    .footer { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+    .footer--bar { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
   }
   @media (min-width: 768px) {
     .footer__grid { grid-template-columns: 1fr auto; align-items: end; }

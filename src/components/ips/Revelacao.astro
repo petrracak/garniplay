@@ -1,0 +1,111 @@
+---
+import { Image } from 'astro:assets';
+import icon from '../../assets/brand/favicon.png';
+---
+
+<section class="section revelacao on-dark" aria-labelledby="revelacao-title">
+  <div class="container revelacao__inner">
+    <img class="revelacao__logo" src="/ips/logo-clara.svg" alt="IPS — Curso de Aprofundamento na Intervenção Psicopedagógica de Sucesso" width="1816" height="339" loading="lazy" data-reveal="scale" />
+    <h2 class="h2" id="revelacao-title" data-reveal style="--d:60ms">O aprofundamento que organiza a condução da Intervenção.</h2>
+    <p class="lead revelacao__lead" data-reveal style="--d:120ms">O IPS foi criado para ajudar você a planejar, acompanhar, interpretar a evolução e conduzir o processo até a Alta — sem transformar casos diferentes em uma fórmula única.</p>
+
+    <div class="formula">
+      <article class="formula__card" data-reveal>
+        <Image src={icon} alt="" widths={[96, 144]} sizes="48px" width={48} class="formula__mark" />
+        <span class="formula__name">Garniplay</span>
+        <h3>Caixa de ferramentas de precisão</h3>
+        <p>Atividades, guias, adaptações e busca inteligente para escolher e aplicar melhor.</p>
+      </article>
+      <span class="formula__plus" aria-hidden="true">+</span>
+      <article class="formula__card formula__card--ips" data-reveal style="--d:140ms">
+        <span class="formula__ips" aria-hidden="true">IPS</span>
+        <span class="formula__name">IPS</span>
+        <h3>Planta da obra</h3>
+        <p>Estrutura, critérios e visão do caminho para conectar as sessões em um processo.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .revelacao {
+    overflow: hidden;
+    text-align: center;
+    background:
+      radial-gradient(50% 50% at 50% 0%, rgb(193 212 187 / 0.18), transparent 70%),
+      radial-gradient(50% 40% at 100% 100%, rgb(129 44 188 / 0.45), transparent 70%),
+      var(--night);
+  }
+  .revelacao__logo { width: min(100%, 520px); height: auto; margin: 0 auto 36px; }
+  .revelacao .h2 { max-width: 20ch; margin: 0 auto; }
+  .revelacao__lead { max-width: 44rem; margin: 20px auto 0; }
+
+  .formula {
+    display: grid;
+    gap: 12px;
+    align-items: center;
+    max-width: 920px;
+    margin: clamp(36px, 5vw, 56px) auto 0;
+    text-align: left;
+  }
+  .formula__card {
+    position: relative;
+    padding: 26px 24px;
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.14);
+  }
+  .formula__card--ips {
+    background: linear-gradient(160deg, rgb(193 212 187 / 0.2), rgb(193 212 187 / 0.06));
+    border-color: rgb(193 212 187 / 0.4);
+  }
+  .formula__card :global(.formula__mark) { width: 48px; height: 48px; margin-bottom: 14px; }
+  .formula__ips {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 14px;
+    border-radius: 14px;
+    background: var(--sage);
+    color: #121a12;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .formula__name {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .formula__card--ips .formula__name { color: var(--sage); }
+  .formula__card h3 { font-size: 1.375rem; letter-spacing: -0.025em; margin-bottom: 8px; }
+  .formula__card p { margin: 0; color: #cfc6e6; }
+
+  .formula__plus {
+    justify-self: center;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--night);
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 0 0 8px rgb(253 199 3 / 0.15);
+  }
+
+  @media (min-width: 820px) {
+    .formula { grid-template-columns: 1fr auto 1fr; gap: 20px; }
+    .formula__card { padding: 32px 30px; min-height: 230px; }
+  }
+</style>

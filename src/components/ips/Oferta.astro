@@ -1,0 +1,118 @@
+---
+import Icon from '../Icon.astro';
+import Seal from '../Seal.astro';
+import { UPSELL } from '../../config';
+
+const [parcelas, valor] = UPSELL.installments.split(' de ');
+---
+
+<section class="section oferta" id="oferta" aria-labelledby="oferta-title">
+  <div class="container">
+    <div class="price" data-reveal="scale">
+      <img class="price__logo" src="/ips/logo-escura.svg" alt="" width="1816" height="339" loading="lazy" />
+      <p class="kicker" style="--kicker-color: var(--sage-deep)">Inclua o IPS no seu acesso</p>
+      <h2 class="price__title" id="oferta-title">IPS — Intervenção Psicopedagógica de Sucesso</h2>
+      <p class="price__invest">Invista em</p>
+      <p class="price__value"><small>{parcelas} de</small> {valor}</p>
+      <p class="price__cash">ou {UPSELL.cash}</p>
+
+      <ul class="price__conds">
+        <li><Icon name="clock" size={20} /><b>1 ano</b> de acesso</li>
+        <li><Icon name="shield" size={20} /><b>7 dias</b> de garantia própria</li>
+        <li><Icon name="check" size={20} stroke={2.6} /><b>One-click</b> sem redigitar o cartão</li>
+      </ul>
+      <p class="price__next">A decisão é concluída nos botões ao final desta página.</p>
+    </div>
+
+    <div class="ips-guarantee">
+      <Seal text="GARANTIA PRÓPRIA DO IPS • 7 DIAS DE GARANTIA •" id="seal-ips" />
+      <div data-reveal>
+        <h3>Conheça a estrutura antes de decidir definitivamente.</h3>
+        <p>A garantia do IPS é incondicional e independente da garantia do Garniplay. Durante os primeiros 7 dias, você pode entrar na plataforma, conhecer a organização e assistir às primeiras aulas. Se perceber que o IPS não faz sentido para o seu momento, pode solicitar o reembolso dentro do prazo e continuar normalmente com o Garniplay.</p>
+      </div>
+    </div>
+
+    <aside class="pap-light" data-reveal>
+      <Icon name="info" size={22} />
+      <p><strong>Já é aluna do Método PAP?</strong> O IPS pode já estar incluído no seu acesso. Antes de comprar, confira sua área de membros para evitar uma compra duplicada.</p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .oferta { background: var(--lilac); }
+
+  .price {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 22px;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border-top: 6px solid var(--sage);
+  }
+  .price__logo { width: min(100%, 300px); height: auto; margin: 0 auto 26px; }
+  .price__title { font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.875rem); letter-spacing: -0.03em; max-width: 22ch; margin: 0 auto; }
+  .price__invest { margin: 22px 0 0; color: var(--muted); font-weight: 600; }
+  .price__value {
+    margin: 4px 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 2rem + 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    color: var(--grape);
+  }
+  .price__value small { font-size: 0.3em; letter-spacing: -0.02em; vertical-align: middle; color: var(--ink); }
+  .price__cash { margin: 10px 0 0; font-size: 1.0625rem; font-weight: 700; color: var(--muted); }
+
+  .price__conds { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 10px; text-align: left; }
+  .price__conds li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: var(--sage-soft);
+    color: var(--text);
+    font-size: 0.9375rem;
+  }
+  .price__conds :global(svg) { color: var(--sage-deep); flex: none; }
+  .price__conds b { color: var(--ink); }
+  .price__next { margin: 22px 0 0; font-family: var(--font-display); font-weight: 600; color: var(--grape); }
+
+  .ips-guarantee {
+    display: grid;
+    gap: 28px;
+    justify-items: center;
+    max-width: 900px;
+    margin: clamp(48px, 6vw, 72px) auto 0;
+    text-align: center;
+  }
+  .ips-guarantee h3 { font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.875rem); letter-spacing: -0.03em; margin-bottom: 12px; }
+
+  .pap-light {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 12px;
+    max-width: 760px;
+    margin: 40px auto 0;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    background: #fff;
+    border: 1px solid #dcd3ea;
+    font-size: 0.9375rem;
+  }
+  .pap-light :global(svg) { color: var(--blue); margin-top: 1px; }
+  .pap-light p { margin: 0; }
+
+  @media (min-width: 720px) {
+    .price { padding: 44px 48px; }
+    .price__conds { grid-template-columns: repeat(3, 1fr); }
+    .price__conds li { flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
+  @media (min-width: 900px) {
+    .ips-guarantee { grid-template-columns: auto 1fr; gap: 56px; text-align: left; justify-items: start; align-items: center; }
+  }
+</style>

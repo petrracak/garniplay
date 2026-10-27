@@ -1,0 +1,79 @@
+---
+const decisions = [
+  { q: 'Quando avançar?', t: 'O aprendente teve um bom desempenho. Você mantém, aumenta a dificuldade ou muda de estratégia?', c: 'purple' },
+  { q: 'Como ler um platô?', t: 'A evolução desacelerou. É momento de sustentar a proposta, revisar o planejamento ou observar outra habilidade?', c: 'blue' },
+  { q: 'Como explicar à família?', t: 'Você percebe mudanças, mas precisa organizar objetivos, sinais observados e próximos passos com clareza.', c: 'green' },
+  { q: 'Quando pensar em Alta?', t: 'O que precisa estar sustentado para reconhecer que o processo cumpriu seus objetivos?', c: 'yellow' },
+];
+---
+
+<section class="section decisoes" aria-labelledby="decisoes-title">
+  <div class="container">
+    <p class="kicker" data-reveal style="--kicker-color: var(--blue)">Entre uma sessão e outra</p>
+    <h2 class="h2 measure" id="decisoes-title" data-reveal style="--d:60ms">Quatro decisões que não deveriam depender apenas da intuição.</h2>
+    <p class="lead measure decisoes__lead" data-reveal style="--d:120ms">Quando essas decisões se conectam, a sessão deixa de ser um evento isolado e passa a produzir informação para o processo.</p>
+
+    <ol class="dec">
+      {decisions.map((d, i) => (
+        <li class={`dec__item dec__item--${d.c}`} data-reveal style={`--d:${i * 80}ms`}>
+          <span class="dec__num">Decisão {i + 1}</span>
+          <h3>{d.q}</h3>
+          <p>{d.t}</p>
+          <span class="dec__mark" aria-hidden="true">?</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .decisoes { background: var(--lilac); }
+  .decisoes__lead { margin-top: 18px; }
+
+  .dec { list-style: none; margin: clamp(32px, 5vw, 52px) 0 0; padding: 0; display: grid; gap: 12px; }
+  .dec__item {
+    --c: var(--purple);
+    position: relative;
+    overflow: hidden;
+    padding: 22px 22px 24px;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    border-top: 5px solid var(--c);
+  }
+  .dec__item--blue { --c: var(--blue); }
+  .dec__item--green { --c: var(--green); }
+  .dec__item--yellow { --c: var(--yellow); }
+
+  .dec__num {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .dec__item h3 { font-size: 1.3125rem; letter-spacing: -0.025em; margin-bottom: 8px; position: relative; z-index: 1; }
+  .dec__item p { margin: 0; font-size: 0.975rem; position: relative; z-index: 1; }
+  .dec__mark {
+    position: absolute;
+    right: 10px;
+    bottom: -34px;
+    font-family: var(--font-display);
+    font-size: 8.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--c);
+    opacity: 0.12;
+    transition: transform 0.6s var(--ease-spring);
+  }
+  .dec__item:hover .dec__mark { transform: rotate(12deg) translateY(-6px); }
+
+  @media (min-width: 720px) { .dec { grid-template-columns: 1fr 1fr; gap: 16px; } }
+  @media (min-width: 1100px) {
+    .dec { grid-template-columns: repeat(4, 1fr); }
+    .dec__item { padding: 26px 24px 30px; min-height: 260px; }
+  }
+</style>

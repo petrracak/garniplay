@@ -1,0 +1,38 @@
+---
+// Upsell do IPS — exibido pela Hotmart logo depois da compra do Garniplay.
+// Regras: sem menu, cronômetro, pop-up, WhatsApp, downsell ou segunda oferta.
+import Base from '../layouts/Base.astro';
+import IpsHero from '../components/ips/IpsHero.astro';
+import Garantido from '../components/ips/Garantido.astro';
+import Territorios from '../components/ips/Territorios.astro';
+import Decisoes from '../components/ips/Decisoes.astro';
+import Revelacao from '../components/ips/Revelacao.astro';
+import Muda from '../components/ips/Muda.astro';
+import Prova from '../components/ips/Prova.astro';
+import IpsRecebe from '../components/ips/IpsRecebe.astro';
+import Oferta from '../components/ips/Oferta.astro';
+import Fechamento from '../components/ips/Fechamento.astro';
+import Footer from '../components/Footer.astro';
+import Motion from '../components/Motion.astro';
+---
+
+<Base
+  title="Compra confirmada | IPS Intervenção Psicopedagógica de Sucesso"
+  description="Seu acesso ao Garniplay está garantido. Conheça o IPS e veja como estruturar a condução da Intervenção do planejamento até a Alta."
+  noindex
+>
+  <IpsHero />
+  <main id="conteudo">
+    <Garantido />
+    <Territorios />
+    <Decisoes />
+    <Revelacao />
+    <Muda />
+    <Prova />
+    <IpsRecebe />
+    <Oferta />
+    <Fechamento />
+  </main>
+  <Footer stickyBar={false} />
+  <Motion />
+</Base>

@@ -1,0 +1,55 @@
+---
+const proofs = [
+  { v: '7.000+', t: 'Psicopedagogas já foram direcionadas por Fernanda Garnizet em sua prática profissional.', c: 'pink' },
+  { v: '10 módulos', t: 'Conteúdo organizado para percorrer os fundamentos, o planejamento, o acompanhamento e a Alta.', c: 'blue' },
+  { v: '1 método', t: 'O mesmo compromisso com direção, intencionalidade e aplicação profissional presente no Garniplay.', c: 'green' },
+];
+---
+
+<section class="section paper-grid prova" aria-labelledby="prova-title">
+  <div class="container">
+    <p class="kicker" data-reveal style="--kicker-color: var(--yellow)">Experiência e consistência</p>
+    <h2 class="h2 measure" id="prova-title" data-reveal style="--d:60ms">Uma formação construída pela mesma profissional que estruturou o Garniplay.</h2>
+
+    <ul class="proofs">
+      {proofs.map((p, i) => (
+        <li class={`proof proof--${p.c}`} data-reveal="scale" style={`--d:${i * 90}ms`}>
+          <b>{p.v}</b>
+          <p>{p.t}</p>
+        </li>
+      ))}
+    </ul>
+    <!-- Depoimentos: inserir somente com autorização e relação direta com o IPS. -->
+  </div>
+</section>
+
+<style>
+  .proofs { list-style: none; margin: clamp(32px, 5vw, 52px) 0 0; padding: 0; display: grid; gap: 12px; }
+  .proof {
+    --c: var(--pink);
+    --soft: var(--pink-soft);
+    padding: 24px 22px;
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    border-bottom: 5px solid var(--c);
+  }
+  .proof--blue { --c: var(--blue); }
+  .proof--green { --c: var(--green); }
+  .proof b {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--c);
+  }
+  .proof--green b { color: #2f8d20; }
+  .proof p { margin: 0; font-size: 0.975rem; }
+  @media (min-width: 900px) {
+    .proofs { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .proof { padding: 30px 28px; }
+  }
+</style>

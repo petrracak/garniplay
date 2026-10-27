@@ -25,6 +25,11 @@
   --blue-soft: #e3f2ff;
   --purple-soft: #f2e9fb;
 
+  /* IPS (upsell): verde-sálvia do logo, como acento do produto */
+  --sage: #c1d4bb;
+  --sage-deep: #3f5a39;
+  --sage-soft: #eef4ec;
+
   /* Texto e superfícies */
   --grape: #57289c;      /* roxo do slogan: títulos */
   --night: #1e0d44;      /* seções escuras */

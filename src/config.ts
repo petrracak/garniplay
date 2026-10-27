@@ -15,3 +15,13 @@ export const LEGAL = {
   privacy: '#',
   support: '#',
 };
+
+/** Upsell do IPS (página /ips, exibida pela Hotmart depois da compra do Garniplay). */
+export const UPSELL = {
+  /** Link/one-click da Hotmart para incluir o IPS. Enquanto for '#', o botão não navega. */
+  oneClickUrl: '#',
+  /** Para onde vai quem recusa (página de obrigado). */
+  declineUrl: '#',
+  installments: '12x de R$ 52,50',
+  cash: 'R$ 597 à vista',
+};

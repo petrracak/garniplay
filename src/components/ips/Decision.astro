@@ -1,0 +1,68 @@
+---
+// Bloco de decisão do upsell: aceitar (one-click) ou recusar em um clique, sem segunda oferta.
+import { UPSELL } from '../../config';
+import Icon from '../Icon.astro';
+
+interface Props {
+  dark?: boolean;
+}
+const { dark = false } = Astro.props;
+---
+
+<div class:list={['decision', { 'decision--dark': dark }]}>
+  <a class="cta cta--block decision__cta" href={UPSELL.oneClickUrl} data-cta>Sim, quero incluir o IPS no meu acesso</a>
+  <p class="decision__terms">
+    <span>{UPSELL.installments} ou {UPSELL.cash}</span>
+    <span><Icon name="check" size={14} stroke={3} /> 1 ano de acesso</span>
+    <span><Icon name="shield" size={14} /> garantia própria de 7 dias</span>
+  </p>
+  <a class="decision__decline" href={UPSELL.declineUrl} data-cta>Não, quero continuar apenas com o Garniplay</a>
+  <p class="decision__note">Seu acesso ao Garniplay permanece exatamente como foi contratado.</p>
+</div>
+
+<style>
+  .decision {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .decision__cta { width: 100%; max-width: 520px; font-size: 1.0625rem; }
+
+  .decision__terms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 14px;
+    margin: 14px 0 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .decision__terms span { display: inline-flex; align-items: center; gap: 5px; }
+  .decision__terms :global(svg) { color: var(--green); }
+  .decision__terms span:first-child { width: 100%; justify-content: center; font-weight: 800; color: var(--ink); }
+
+  .decision__decline {
+    display: inline-block;
+    margin-top: 26px;
+    padding: 6px 4px;
+    font-size: 0.9375rem;
+    color: var(--muted);
+    text-decoration: underline;
+    text-decoration-color: rgb(108 101 132 / 0.45);
+    text-underline-offset: 4px;
+    transition: color 0.2s;
+  }
+  .decision__decline:hover { color: var(--ink); }
+  .decision__note { margin: 4px 0 0; font-size: 0.8125rem; color: var(--muted); opacity: 0.85; }
+
+  .decision--dark .decision__terms { color: #bfb5dd; }
+  .decision--dark .decision__terms span:first-child { color: #fff; }
+  .decision--dark .decision__terms :global(svg) { color: var(--sage); }
+  .decision--dark .decision__decline { color: #cfc6e6; text-decoration-color: rgb(207 198 230 / 0.45); }
+  .decision--dark .decision__decline:hover { color: #fff; }
+  .decision--dark .decision__note { color: #a99fc9; }
+</style>

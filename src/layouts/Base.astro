@@ -7,9 +7,11 @@ import { SITE } from '../config';
 interface Props {
   title?: string;
   description?: string;
+  /** páginas de pós-compra não devem aparecer no Google */
+  noindex?: boolean;
 }
 
-const { title = SITE.title, description = SITE.description } = Astro.props;
+const { title = SITE.title, description = SITE.description, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og-image.jpg', Astro.site);
 
@@ -26,6 +28,7 @@ const fontFaces = `
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#ffffff" />
     <meta name="author" content={SITE.author} />

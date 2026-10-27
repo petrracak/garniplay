@@ -1,0 +1,152 @@
+---
+import Icon from '../Icon.astro';
+
+const transformation = [
+  { t: 'Mais clareza para planejar', d: 'Você organiza objetivos e etapas antes de escolher o que fazer, em vez de montar o caminho apenas conforme as dúvidas aparecem.', icon: 'route' },
+  { t: 'Mais segurança para ajustar', d: 'Quando a resposta não é a esperada, você volta aos registros, revisa o percurso e decide com base no que observou.', icon: 'levels' },
+  { t: 'Mais autoridade para explicar', d: 'A família entende que não existe uma sequência aleatória de atividades, mas um processo com objetivos, evolução e próximos passos.', icon: 'people' },
+] as const;
+const benefits = [
+  { t: 'Critérios para avançar', d: 'Aprenda a relacionar o desempenho observado ao momento de manter, aumentar o desafio ou revisar a estratégia.' },
+  { t: 'Leitura da evolução', d: 'Use registros e objetivos para compreender o que se consolidou, o que ainda precisa de apoio e quando reorganizar o plano.' },
+  { t: 'Comunicação do processo', d: 'Organize a conversa com família, escola e outros profissionais sem perder a clareza do seu papel.' },
+  { t: 'Alta com critérios', d: 'Trate a Alta como uma etapa do processo, apoiada em objetivos e evolução observada, não como uma decisão por impulso.' },
+];
+const compare = [
+  { m: 'Bom desempenho', a: 'Você ajusta nível, comandos e variações da atividade.', b: 'Você conecta o desempenho a critérios de progressão do processo.' },
+  { m: 'Evolução desacelerada', a: 'Você encontra novas possibilidades dentro do acervo.', b: 'Você revisa registros, objetivos e percurso antes de decidir a próxima etapa.' },
+  { m: 'Conversa com a família', a: 'Você explica a habilidade trabalhada e o objetivo da proposta.', b: 'Você comunica evolução, etapa atual e próximos objetivos do processo.' },
+  { m: 'Momento da Alta', a: 'Você mantém o histórico das atividades e observações realizadas.', b: 'Você analisa o encerramento a partir de objetivos, evolução e critérios profissionais.' },
+];
+---
+
+<section class="section muda" aria-labelledby="muda-title">
+  <div class="container">
+    <p class="kicker" data-reveal style="--kicker-color: var(--pink)">O que muda com o IPS</p>
+    <h2 class="h2 measure" id="muda-title" data-reveal style="--d:60ms">Você deixa de terminar uma sessão sem saber como ela se conecta à próxima.</h2>
+    <p class="lead measure muda__lead" data-reveal style="--d:120ms">O desejo não é apenas ter mais conteúdo. É olhar para o histórico do aprendente e conseguir enxergar onde ele começou, o que mudou, o que ainda precisa ser consolidado e qual decisão vem agora.</p>
+
+    <ul class="trans">
+      {transformation.map((it, i) => (
+        <li data-reveal style={`--d:${i * 90}ms`}>
+          <span class="trans__icon"><Icon name={it.icon} size={22} /></span>
+          <h3>{it.t}</h3>
+          <p>{it.d}</p>
+        </li>
+      ))}
+    </ul>
+
+    <ol class="benef">
+      {benefits.map((b, i) => (
+        <li data-reveal style={`--d:${(i % 2) * 80}ms`}>
+          <span class="benef__n">{i + 1}</span>
+          <div><h3>{b.t}</h3><p>{b.d}</p></div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="cmp" role="table" aria-label="Comparação: com o Garniplay e com Garniplay + IPS" data-reveal>
+      <div class="cmp__head" role="row">
+        <span role="columnheader">Momento profissional</span>
+        <span role="columnheader">Com o Garniplay</span>
+        <span role="columnheader" class="cmp__plus">Com Garniplay + IPS</span>
+      </div>
+      {compare.map((r) => (
+        <div class="cmp__row" role="row">
+          <span class="cmp__moment" role="rowheader">{r.m}</span>
+          <span class="cmp__a" role="cell"><em>Com o Garniplay</em>{r.a}</span>
+          <span class="cmp__b" role="cell"><em>Com Garniplay + IPS</em>{r.b}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .muda { background: #fff; }
+  .muda__lead { margin-top: 18px; }
+
+  .trans { list-style: none; margin: clamp(32px, 5vw, 52px) 0 0; padding: 0; display: grid; gap: 12px; }
+  .trans li { padding: 24px 22px; border-radius: var(--radius); background: var(--lilac); }
+  .trans__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 14px;
+    border-radius: 14px;
+    background: #fff;
+    color: var(--grape);
+    box-shadow: var(--shadow-sm);
+  }
+  .trans h3 { font-size: 1.1875rem; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .trans p { margin: 0; font-size: 0.975rem; }
+
+  .benef { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 22px; }
+  .benef li { display: grid; grid-template-columns: 40px 1fr; gap: 16px; align-items: start; }
+  .benef__n {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid var(--sage);
+    color: var(--sage-deep);
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+  .benef h3 { font-size: 1.125rem; letter-spacing: -0.02em; margin: 6px 0 6px; }
+  .benef p { margin: 0; font-size: 0.975rem; }
+
+  /* ---------- Comparação: cartões no mobile, tabela no desktop ---------- */
+  .cmp { margin-top: clamp(40px, 6vw, 64px); display: grid; gap: 12px; }
+  .cmp__head { display: none; }
+  .cmp__row {
+    display: grid;
+    gap: 8px;
+    padding: 18px;
+    border-radius: var(--radius);
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+  }
+  .cmp__moment { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: var(--ink); }
+  .cmp__a, .cmp__b { display: block; padding: 12px 14px; border-radius: 14px; font-size: 0.9375rem; line-height: 1.5; }
+  .cmp__a { background: #f7f5fb; color: var(--text); }
+  .cmp__b { background: var(--sage-soft); color: var(--ink); font-weight: 600; box-shadow: inset 0 0 0 1.5px var(--sage); }
+  .cmp em {
+    display: block;
+    margin-bottom: 4px;
+    font-style: normal;
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cmp__b em { color: var(--sage-deep); }
+
+  @media (min-width: 900px) {
+    .trans { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .trans li { padding: 28px 26px; }
+    .benef { grid-template-columns: 1fr 1fr; gap: 28px 48px; }
+
+    .cmp { gap: 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .cmp__head, .cmp__row { display: grid; grid-template-columns: 0.8fr 1.1fr 1.1fr; }
+    .cmp__head span {
+      padding: 18px 22px;
+      background: var(--night);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    .cmp__head .cmp__plus { background: #2c4a27; color: var(--sage); }
+    .cmp__row { gap: 0; padding: 0; border: 0; border-radius: 0; box-shadow: none; border-top: 1px solid var(--line); }
+    .cmp__moment, .cmp__a, .cmp__b { padding: 20px 22px; border-radius: 0; }
+    .cmp__a { background: #faf9fc; }
+    .cmp__b { box-shadow: none; }
+    .cmp em { display: none; }
+  }
+</style>

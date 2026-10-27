@@ -1,0 +1,101 @@
+---
+// Espaço reservado para o player da VTurb.
+// Quando o vídeo estiver pronto: cole o embed da VTurb dentro do <div class="video__frame"> no lugar
+// do placeholder (o embed já cuida do tamanho; mantenha a proporção 16:9).
+interface Props {
+  label?: string;
+  /** logo exibido no placeholder */
+  logo?: string;
+  logoAlt?: string;
+}
+const { label = 'Vídeo de apresentação', logo, logoAlt = '' } = Astro.props;
+---
+
+<div class="video" data-reveal="scale">
+  <div class="video__frame">
+    <slot>
+      <div class="video__placeholder" role="img" aria-label={`${label} (em breve)`}>
+        {logo && <img class="video__logo" src={logo} alt={logoAlt} width="1816" height="339" />}
+        <span class="video__play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="30" height="30"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+        </span>
+        <span class="video__label">{label}</span>
+      </div>
+    </slot>
+  </div>
+</div>
+
+<style>
+  .video {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 8px;
+    border-radius: 28px;
+    background: linear-gradient(140deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0.04));
+    box-shadow: 0 40px 80px -24px rgb(0 0 0 / 0.6);
+    isolation: isolate;
+  }
+  /* borda com as cores da torre, bem sutil */
+  .video::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: 29px;
+    background: linear-gradient(120deg, var(--pink), var(--yellow), var(--green), var(--blue), var(--purple));
+    opacity: 0.55;
+    filter: blur(14px);
+  }
+
+  .video__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 21px;
+    background: #0d0620;
+  }
+
+  .video__placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: clamp(14px, 3vw, 24px);
+    padding: 24px;
+    background:
+      radial-gradient(60% 70% at 50% 40%, rgb(129 44 188 / 0.55), transparent 70%),
+      radial-gradient(40% 50% at 85% 90%, rgb(2 144 249 / 0.3), transparent 70%),
+      linear-gradient(160deg, #2a1360, #12072c);
+  }
+  .video__logo { width: min(60%, 320px); height: auto; opacity: 0.9; }
+
+  .video__play {
+    display: grid;
+    place-items: center;
+    width: clamp(64px, 12vw, 88px);
+    aspect-ratio: 1;
+    padding-left: 4px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, var(--cta-top), var(--cta-bottom));
+    color: #fff;
+    box-shadow: 0 0 0 0 rgb(255 122 26 / 0.5), 0 16px 30px -8px rgb(255 98 20 / 0.6);
+    animation: play-pulse 2.2s var(--ease-out) infinite;
+  }
+  @keyframes play-pulse {
+    70%, 100% { box-shadow: 0 0 0 18px rgb(255 122 26 / 0), 0 16px 30px -8px rgb(255 98 20 / 0.6); }
+  }
+  .video__label {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #cfc6e6;
+  }
+
+  @media (max-width: 599px) {
+    .video { padding: 5px; border-radius: 20px; margin-inline: calc(-1 * var(--gutter) + 8px); }
+    .video__frame { border-radius: 16px; }
+    .video__logo { display: none; }
+  }
+</style>

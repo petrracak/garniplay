@@ -1,0 +1,185 @@
+---
+import { Image } from 'astro:assets';
+import logoGarniplay from '../../assets/brand/logo-branca.png';
+import VideoSlot from '../VideoSlot.astro';
+import Ring from '../Ring.astro';
+import Icon from '../Icon.astro';
+import Decision from './Decision.astro';
+---
+
+<div class="confirm" role="status">
+  <div class="container confirm__inner">
+    <span class="confirm__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 12.5l4.2 4.2L19 7" /></svg>
+    </span>
+    <p><strong>Compra confirmada</strong> Seu pagamento foi aprovado. O Garniplay já está garantido no seu nome.</p>
+  </div>
+</div>
+
+<header class="ips-hero on-dark" id="topo">
+  <Ring color="yellow" size={60} class="ips-hero__ring ips-hero__ring--a" />
+  <Ring color="blue" size={34} class="ips-hero__ring ips-hero__ring--b" />
+
+  <div class="container ips-hero__inner">
+    <Image src={logoGarniplay} alt="Garniplay" widths={[160, 320]} sizes="140px" width={140} loading="eager" class="ips-hero__brand" />
+
+    <p class="ips-hero__eyebrow enter" style="--i:1"><Icon name="check" size={15} stroke={3} /> Seu acesso ao Garniplay está garantido</p>
+    <h1 class="ips-hero__title enter" style="--i:2">
+      Você já resolveu a escolha da atividade. Agora pode <span class="marker">estruturar o caminho</span> entre uma sessão e outra.
+    </h1>
+    <p class="ips-hero__lead enter" style="--i:3">
+      O Garniplay orienta o que aplicar em cada sessão. Mas a decisão que define o processo acontece depois da atividade: quando você precisa interpretar a resposta e escolher o próximo passo. No vídeo abaixo, eu vou mostrar como o IPS organiza essa condução — do planejamento até a Alta.
+    </p>
+
+    <div class="ips-hero__video enter" style="--i:4">
+      <!-- VTurb: cole o embed do vídeo do IPS dentro deste componente (ver VideoSlot.astro) -->
+      <VideoSlot label="Vídeo de apresentação do IPS" logo="/ips/logo-clara.svg" logoAlt="IPS — Intervenção Psicopedagógica de Sucesso" />
+    </div>
+    <p class="ips-hero__watch">Assista antes de decidir. O Garniplay já é seu, independentemente da sua escolha abaixo.</p>
+
+    <aside class="pap">
+      <Icon name="info" size={22} />
+      <p><strong>Já é aluna do Método PAP?</strong> O IPS pode já estar incluído no seu acesso. Confira sua área de membros antes de comprar novamente.</p>
+    </aside>
+
+    <Decision dark />
+  </div>
+</header>
+
+<style>
+  /* ---------- Faixa de confirmação ---------- */
+  .confirm {
+    background: linear-gradient(90deg, #2f8d20, #46ae34);
+    color: #fff;
+  }
+  .confirm__inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-block: 12px;
+  }
+  .confirm__icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 50%;
+    background: #fff;
+    color: #2f8d20;
+    animation: confirm-pop 0.6s var(--ease-spring) 0.2s both;
+  }
+  .confirm__icon path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: draw 0.5s var(--ease-out) 0.6s forwards;
+  }
+  .confirm p { margin: 0; font-size: 0.875rem; line-height: 1.4; color: #eafbe6; }
+  .confirm strong {
+    display: block;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  @keyframes confirm-pop { from { transform: scale(0); } }
+
+  /* ---------- Hero ---------- */
+  .ips-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: 32px 72px;
+    text-align: center;
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgb(129 44 188 / 0.6), transparent 70%),
+      radial-gradient(40% 30% at 100% 60%, rgb(242 12 117 / 0.18), transparent 70%),
+      radial-gradient(40% 30% at 0% 80%, rgb(193 212 187 / 0.14), transparent 70%),
+      var(--night);
+  }
+  .ips-hero :global(.ips-hero__ring) { opacity: 0.85; animation: bob 8s ease-in-out infinite; }
+  .ips-hero :global(.ips-hero__ring--a) { top: 120px; right: -18px; }
+  .ips-hero :global(.ips-hero__ring--b) { top: 46%; left: 4%; animation-delay: -3s; }
+  @keyframes bob { 50% { transform: translateY(-12px) rotate(10deg); } }
+
+  .ips-hero__inner { position: relative; z-index: 1; }
+  .ips-hero :global(.ips-hero__brand) { width: 128px; height: auto; margin: 0 auto 32px; }
+
+  .ips-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgb(193 212 187 / 0.14);
+    border: 1px solid rgb(193 212 187 / 0.3);
+    color: var(--sage);
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .ips-hero__title {
+    max-width: 22ch;
+    margin: 0 auto;
+    font-size: clamp(1.875rem, 1.1rem + 3.4vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+  /* marca-texto que acompanha a quebra de linha (o trecho é longo no celular) */
+  .marker {
+    color: var(--sage);
+    background-image: linear-gradient(transparent 64%, rgb(253 199 3 / 0.32) 64%, rgb(253 199 3 / 0.32) 92%, transparent 92%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    animation: marker 0.9s var(--ease-out) 0.9s forwards;
+  }
+  @keyframes marker { to { background-size: 100% 100%; } }
+
+  .ips-hero__lead {
+    max-width: 44rem;
+    margin: 22px auto 0;
+    font-size: 1.0625rem;
+    color: #d9d2ee;
+  }
+
+  .ips-hero__video { margin-top: clamp(32px, 5vw, 48px); }
+  .ips-hero__watch { margin: 18px auto 0; max-width: 34rem; font-size: 0.875rem; color: #bfb5dd; }
+
+  .pap {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 12px;
+    max-width: 640px;
+    margin: 28px auto 32px;
+    padding: 16px 18px;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.14);
+    text-align: left;
+    font-size: 0.9375rem;
+    color: #d9d2ee;
+  }
+  .pap :global(svg) { color: var(--yellow); margin-top: 1px; }
+  .pap p { margin: 0; }
+
+  .enter { animation: hero-in 0.8s var(--ease-out) both; animation-delay: calc(var(--i) * 70ms + 80ms); }
+  @keyframes hero-in { from { opacity: 0; transform: translate3d(0, 18px, 0); } }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  @media (min-width: 1024px) {
+    .ips-hero { padding-block: 44px 96px; }
+    .ips-hero :global(.ips-hero__brand) { width: 150px; margin-bottom: 40px; }
+    .ips-hero__lead { font-size: 1.1875rem; }
+    .confirm p { font-size: 0.9375rem; }
+    .confirm__inner { justify-content: center; }
+  }
+</style>
