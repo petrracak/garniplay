@@ -1,11 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Na Vercel, a URL de produção vem da variável de sistema VERCEL_PROJECT_PRODUCTION_URL.
-// Quando houver domínio próprio, troque por ele (ex.: 'https://garniplay.com.br').
-const site = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : 'http://localhost:4321';
+// Domínio oficial: usado no link canônico e na imagem de compartilhamento (WhatsApp, redes).
+const site = 'https://garniplay.fernandagarnizet.com.br';
 
 export default defineConfig({
   site,
