@@ -1,5 +1,5 @@
 ---
-import Decision from './Decision.astro';
+import Icon from '../Icon.astro';
 import Ring from '../Ring.astro';
 import { UPSELL } from '../../config';
 ---
@@ -14,9 +14,10 @@ import { UPSELL } from '../../config';
       <p>Nesta página, você pode incluir o IPS agora, com um clique e sem preencher novamente os dados do cartão. A condição apresentada é de {UPSELL.installments} ou {UPSELL.cash}, com 1 ano de acesso e uma garantia própria de 7 dias. Em futuras ofertas, o preço e até a disponibilidade do IPS para compra separada poderão ser diferentes.</p>
       <p>Se este aprofundamento faz sentido para o seu momento profissional, esta é a ocasião de integrar os dois produtos desde o início.</p>
     </div>
-    <div data-reveal>
-      <Decision />
-    </div>
+    <!-- A compra acontece no widget da Hotmart (abaixo do vídeo); aqui só levamos até ele -->
+    <a class="fechamento__go" href="#area-compra" data-reveal>
+      <Icon name="check" size={18} stroke={2.6} /> Ir para a opção de incluir o IPS
+    </a>
     <p class="fechamento__sign">Fernanda Garnizet • Garniplay + IPS</p>
   </div>
 </section>
@@ -30,5 +31,20 @@ import { UPSELL } from '../../config';
 
   .fechamento__title { max-width: 22ch; margin: 0 auto; }
   .fechamento__text { max-width: 44rem; margin: 22px auto 36px; color: var(--text); }
+  .fechamento__go {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 54px;
+    padding: 12px 26px;
+    border-radius: 999px;
+    border: 2px solid var(--grape);
+    color: var(--grape);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .fechamento__go:hover { background: var(--grape); color: #fff; }
   .fechamento__sign { margin: 48px 0 0; font-size: 0.875rem; color: var(--muted); }
 </style>

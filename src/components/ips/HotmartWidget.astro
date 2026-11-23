@@ -1,0 +1,56 @@
+---
+// Widget "Sales Funnel" da Hotmart (one-click do upsell). Ele já traz o botão de aceite e o de
+// recusa; os destinos de cada um são configurados no funil, na Hotmart.
+// Fica dentro de .esconder: a VTurb libera no pitch, junto com o resto da página.
+// Atenção: o widget só pode existir UMA vez na página (id fixo exigido pela Hotmart).
+import Icon from '../Icon.astro';
+import { UPSELL } from '../../config';
+---
+
+<div id="area-compra" class="buy esconder">
+  <p class="buy__terms">
+    <span>{UPSELL.installments} ou {UPSELL.cash}</span>
+    <span><Icon name="check" size={14} stroke={3} /> 1 ano de acesso</span>
+    <span><Icon name="shield" size={14} /> garantia própria de 7 dias</span>
+  </p>
+
+  <!-- HOTMART - Sales Funnel Widget -->
+  <div id="hotmart-sales-funnel" class="buy__widget"></div>
+  <script is:inline src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
+  <script is:inline>
+    checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
+  </script>
+  <!-- HOTMART - Sales Funnel Widget -->
+</div>
+
+<style>
+  .buy {
+    max-width: 640px;
+    margin: 32px auto 0;
+    padding: 22px 0 0;
+    overflow: hidden; /* o iframe da Hotmart tem largura mínima de 320px: ocupa o cartão todo */
+    border-radius: var(--radius-lg);
+    background: #fff;
+    color: var(--ink);
+    text-align: center;
+    box-shadow: 0 30px 60px -24px rgb(0 0 0 / 0.5);
+    border-top: 5px solid var(--sage);
+    scroll-margin-top: 24px;
+  }
+  .buy__terms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 14px;
+    margin: 0 0 14px;
+    padding-inline: 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .buy__terms span { display: inline-flex; align-items: center; gap: 5px; }
+  .buy__terms span:first-child { width: 100%; justify-content: center; font-size: 1rem; font-weight: 800; color: var(--ink); }
+  .buy__terms :global(svg) { color: var(--sage-deep); }
+  .buy__widget { min-height: 60px; }
+  .buy__widget :global(iframe) { display: block; max-width: 100%; }
+</style>

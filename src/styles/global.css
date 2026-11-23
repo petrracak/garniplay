@@ -306,3 +306,7 @@ a, button { -webkit-tap-highlight-color: transparent; touch-action: manipulation
   }
   .js [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* ---------- Delay da VTurb ---------- */
+/* Escondido até o pitch do vídeo; a VTurb libera no segundo configurado (VturbPlayer.astro). */
+.esconder { display: none; }

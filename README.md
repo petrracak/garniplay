@@ -32,9 +32,21 @@ npm run assets
 
 O script recorta a foto da hero, gera favicons e a imagem de compartilhamento (`public/og-image.jpg`). No build, o Astro converte tudo para WebP em vários tamanhos.
 
+## Vídeos e delay (VTurb)
+
+- Os IDs dos vídeos e o segundo do pitch ficam em `src/config.ts` → `VSL`.
+- Tudo abaixo do vídeo tem a classe `esconder` e aparece no pitch (delay oficial da VTurb, com `persist`: quem volta vê tudo).
+- Para revisar a página sem assistir o vídeo: adicione `?preview=1` ao endereço.
+- Se o player não carregar em 15 s (bloqueador, falha de rede), o conteúdo é liberado para a página não ficar sem oferta.
+- A hero com a foto da Fernanda (para uma landing sem VSL) está guardada em `src/components/HeroFoto.astro`.
+
+## Upsell (IPS)
+
+Compra e recusa acontecem no widget "Sales Funnel" da Hotmart (`src/components/ips/HotmartWidget.astro`). Os destinos dos botões são configurados no funil, na Hotmart.
+
 ## Pendências
 
-- [ ] VSL (vturb) na hero: espaço marcado em `src/components/Hero.astro`
 - [ ] Depoimentos: marcados em `src/pages/index.astro`
 - [ ] Seção de preço: marcada em `src/pages/index.astro`
-- [ ] Link do checkout e links de termos/privacidade/suporte em `src/config.ts`
+- [ ] Links de termos/privacidade/suporte em `src/config.ts` → `LEGAL`
+- [ ] WhatsApp de suporte em `src/config.ts` → `THANKS`

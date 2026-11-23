@@ -1,10 +1,11 @@
 ---
 import { Image } from 'astro:assets';
 import logoGarniplay from '../../assets/brand/logo-branca.png';
-import VideoSlot from '../VideoSlot.astro';
+import VturbPlayer from '../vturb/VturbPlayer.astro';
+import HotmartWidget from './HotmartWidget.astro';
+import { VSL } from '../../config';
 import Ring from '../Ring.astro';
 import Icon from '../Icon.astro';
-import Decision from './Decision.astro';
 ---
 
 <div class="confirm" role="status">
@@ -23,6 +24,8 @@ import Decision from './Decision.astro';
   <div class="container ips-hero__inner">
     <Image src={logoGarniplay} alt="Garniplay" widths={[160, 320]} sizes="140px" width={140} loading="eager" class="ips-hero__brand" />
 
+    <div class="ips-hero__grid">
+    <div class="ips-hero__copy">
     <p class="ips-hero__eyebrow enter" style="--i:1"><Icon name="check" size={15} stroke={3} /> Seu acesso ao Garniplay está garantido</p>
     <h1 class="ips-hero__title enter" style="--i:2">
       Você já resolveu a escolha da atividade. Agora pode <span class="marker">estruturar o caminho</span> entre uma sessão e outra.
@@ -31,18 +34,21 @@ import Decision from './Decision.astro';
       O Garniplay orienta o que aplicar em cada sessão. Mas a decisão que define o processo acontece depois da atividade: quando você precisa interpretar a resposta e escolher o próximo passo. No vídeo abaixo, eu vou mostrar como o IPS organiza essa condução — do planejamento até a Alta.
     </p>
 
-    <div class="ips-hero__video enter" style="--i:4">
-      <!-- VTurb: cole o embed do vídeo do IPS dentro deste componente (ver VideoSlot.astro) -->
-      <VideoSlot label="Vídeo de apresentação do IPS" logo="/ips/logo-clara.svg" logoAlt="IPS — Intervenção Psicopedagógica de Sucesso" />
     </div>
-    <p class="ips-hero__watch">Assista antes de decidir. O Garniplay já é seu, independentemente da sua escolha abaixo.</p>
+
+    <div class="ips-hero__video enter" style="--i:4">
+      <VturbPlayer video={VSL.ips} />
+      <p class="ips-hero__watch">Assista antes de decidir. O Garniplay já é seu, independentemente da sua escolha abaixo.</p>
+    </div>
 
     <aside class="pap">
       <Icon name="info" size={22} />
       <p><strong>Já é aluna do Método PAP?</strong> O IPS pode já estar incluído no seu acesso. Confira sua área de membros antes de comprar novamente.</p>
     </aside>
+    </div>
 
-    <Decision dark />
+    <!-- Aceite/recusa: widget da Hotmart, liberado no pitch pela VTurb -->
+    <HotmartWidget />
   </div>
 </header>
 
@@ -175,10 +181,26 @@ import Decision from './Decision.astro';
   @keyframes hero-in { from { opacity: 0; transform: translate3d(0, 18px, 0); } }
   @keyframes draw { to { stroke-dashoffset: 0; } }
 
+  .ips-hero__watch { margin-top: 16px; }
+
+  /* Desktop: texto e aviso PAP à esquerda, vídeo vertical à direita */
   @media (min-width: 1024px) {
-    .ips-hero { padding-block: 44px 96px; }
-    .ips-hero :global(.ips-hero__brand) { width: 150px; margin-bottom: 40px; }
-    .ips-hero__lead { font-size: 1.1875rem; }
+    .ips-hero { padding-block: 44px 96px; text-align: left; }
+    .ips-hero :global(.ips-hero__brand) { width: 150px; margin: 0 0 40px; }
+    .ips-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      grid-template-areas: 'copy video' 'pap video';
+      column-gap: 64px;
+      align-items: center;
+    }
+    .ips-hero__copy { grid-area: copy; align-self: end; }
+    .ips-hero__video { grid-area: video; margin-top: 0; }
+    .ips-hero__video :global(.vsl) { max-width: 340px; }
+    .pap { grid-area: pap; align-self: start; margin: 28px 0 0; }
+    .ips-hero__title { margin: 0; max-width: 18ch; }
+    .ips-hero__lead { font-size: 1.125rem; margin-left: 0; }
+    .ips-hero__watch { text-align: center; }
     .confirm p { font-size: 0.9375rem; }
     .confirm__inner { justify-content: center; }
   }

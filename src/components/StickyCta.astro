@@ -74,13 +74,17 @@ import { CHECKOUT_URL } from '../config';
 
 <script>
   const bar = document.querySelector<HTMLElement>('[data-sticky]');
-  const heroCta = document.querySelector('[data-hero-cta]');
+  // marcador do fim da dobra: o botão da hero (versão com foto) ou a própria hero (versão com vídeo)
+  const heroCta = document.querySelector('[data-hero-cta]') ?? document.querySelector('[data-hero]');
+  // com a VSL, a oferta só existe depois do pitch: a barra não pode aparecer antes disso
+  const content = document.getElementById('conteudo');
+  const offerVisible = () => !content || getComputedStyle(content).display !== 'none';
   const final = document.querySelector('[data-final]');
   if (bar && heroCta) {
     let pastHero = false;
     let atFinal = false;
     const sync = () => {
-      const on = pastHero && !atFinal;
+      const on = pastHero && !atFinal && offerVisible();
       bar.classList.toggle('on', on);
       bar.setAttribute('aria-hidden', String(!on));
       bar.querySelectorAll('a').forEach((a) => (a.tabIndex = on ? 0 : -1));

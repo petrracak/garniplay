@@ -1,0 +1,68 @@
+---
+// Player da VTurb (vídeo vertical 9:16) + delay: tudo que tiver a classe "esconder"
+// aparece no segundo `revealAt` do vídeo. Código conforme a documentação da VTurb.
+import { VSL } from '../../config';
+interface Props {
+  video: { player: string; revealAt: number };
+}
+const { video } = Astro.props;
+const src = `https://scripts.converteai.net/${VSL.account}/players/${video.player}/v4/player.js`;
+---
+
+<div class="vsl">
+  <vturb-smartplayer id={`vid-${video.player}`} style="display: block; margin: 0 auto; width: 100%; max-width: 400px;">
+    <div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 177.77777777777777% 0 0; z-index: 0; background-color: black;"></div>
+  </vturb-smartplayer>
+</div>
+
+<script is:inline define:vars={{ src, delaySeconds: video.revealAt }}>
+  // embed da VTurb
+  var s = document.createElement('script');
+  s.src = src;
+  s.async = true;
+  document.head.appendChild(s);
+
+  // delay da VTurb: libera os elementos .esconder no pitch
+  var player = document.querySelector('vturb-smartplayer');
+  var revealAll = function () {
+    document.querySelectorAll('.esconder').forEach(function (el) { el.classList.remove('esconder'); });
+  };
+  player.addEventListener('player:ready', function () {
+    player.displayHiddenElements(delaySeconds, ['.esconder'], { persist: true });
+  });
+
+  // ?preview=1 mostra tudo na hora (para revisar a página sem assistir o vídeo)
+  // (espera o HTML terminar de carregar: este script fica na hero, antes do conteúdo)
+  if (new URLSearchParams(location.search).get('preview') === '1') document.addEventListener('DOMContentLoaded', revealAll);
+
+  // Segurança: se o player não carregar (bloqueador, falha de rede), a página não fica sem oferta
+  setTimeout(function () {
+    if (!customElements.get('vturb-smartplayer')) revealAll();
+  }, 15000);
+</script>
+
+<style>
+  .vsl {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 6px;
+    border-radius: 26px;
+    background: linear-gradient(140deg, rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.1));
+    box-shadow: 0 40px 80px -28px rgb(30 13 68 / 0.55);
+    isolation: isolate;
+  }
+  /* brilho com as cores da torre em volta do vídeo */
+  .vsl::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    border-radius: 28px;
+    background: linear-gradient(140deg, var(--pink), var(--yellow), var(--green), var(--blue), var(--purple));
+    opacity: 0.55;
+    filter: blur(16px);
+  }
+  .vsl :global(vturb-smartplayer) { border-radius: 20px; overflow: hidden; }
+</style>

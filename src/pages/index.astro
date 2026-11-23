@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import Hero from '../components/Hero.astro';
+import HeroVsl from '../components/HeroVsl.astro';
+import VturbHead from '../components/vturb/VturbHead.astro';
+import { VSL } from '../config';
 import Statement from '../components/Statement.astro';
 import Conheca from '../components/Conheca.astro';
 import ParaQuem from '../components/ParaQuem.astro';
@@ -23,8 +25,10 @@ import Motion from '../components/Motion.astro';
 ---
 
 <Base>
-  <Hero />
-  <main id="conteudo">
+  <VturbHead slot="head" video={VSL.garniplay} />
+  <HeroVsl />
+  <!-- Tudo abaixo do vídeo aparece no pitch (delay da VTurb, ver VSL em config.ts) -->
+  <main id="conteudo" class="esconder">
     <Statement />
     <Conheca />
     <ParaQuem />
